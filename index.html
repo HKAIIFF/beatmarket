@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>香港AI國際電影節 - AIF.RWA生態系統</title>
+    <title>HKAIFM - 香港AI影視市場 | 全球AI影視資產化領導平台</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,6 @@
             --primary: #3498db;
             --secondary: #8e44ad;
             --accent: #00ff9d;
-            --gold: #ffd700;
         }
         
         body {
@@ -28,6 +27,7 @@
         .logo-font {
             font-family: 'Orbitron', sans-serif;
             font-weight: 800;
+            font-size: 2.5rem;
             letter-spacing: 3px;
             background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
             -webkit-background-clip: text;
@@ -47,9 +47,12 @@
         .logo-sub {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
+            font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--accent);
+            margin-top: -10px;
+            text-align: center;
             opacity: 0.8;
         }
         
@@ -115,23 +118,27 @@
             transform: translateY(-3px);
         }
         
-        .btn-gold {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #000;
-            font-weight: 700;
+        .btn-futures {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
         
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
+        .btn-spot {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
         
         .hero {
             position: relative;
             overflow: hidden;
+            min-height: 100vh;
             display: flex;
             align-items: center;
+            padding-top: 80px;
         }
         
         .hero:before {
@@ -156,10 +163,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            opacity: 0.7;
+            opacity: 0.3;
             animation: bgPan 30s infinite linear;
         }
         
@@ -209,36 +216,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        .progress-bar {
-            background: linear-gradient(to right, var(--primary), var(--accent), var(--secondary));
-            border-radius: 9999px;
-            height: 8px;
-        }
-        
-        .cyber-border {
-            position: relative;
-        }
-        
-        .cyber-border:after {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, transparent 30%, var(--accent) 45%, var(--secondary) 55%, transparent 70%);
-            background-size: 200% 200%;
-            animation: borderGlow 5s linear infinite;
-            z-index: -1;
-            border-radius: 20px;
-        }
-        
-        @keyframes borderGlow {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-        
         .ai-element {
             position: absolute;
             background-color: rgba(52, 152, 219, 0.1);
@@ -267,28 +244,6 @@
         @keyframes dataStream {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100vh); }
-        }
-        
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-        
-        .section-title.center:after {
-            left: 50%;
-            transform: translateX(-50%);
         }
         
         .stats-card {
@@ -322,69 +277,62 @@
             color: transparent;
         }
         
-        .step-card {
+        .market-card {
             position: relative;
-            padding: 30px;
+            overflow: hidden;
             border-radius: 20px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(142, 68, 173, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+        
+        .market-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.3);
+        }
+        
+        .trust-card {
             background: rgba(26, 32, 44, 0.6);
-            border: 2px solid rgba(0, 255, 157, 0.2);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
             transition: all 0.3s ease;
         }
         
-        .step-card:hover {
+        .trust-card:hover {
+            transform: translateY(-5px);
             border-color: var(--accent);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.2);
+        }
+        
+        .process-step {
+            background: rgba(26, 32, 44, 0.6);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
         }
         
         .step-number {
             position: absolute;
-            top: -20px;
-            left: 30px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            top: -15px;
+            left: 20px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-        }
-        
-        .rwa-project-card {
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(142, 68, 173, 0.1));
-            border: 1px solid rgba(0, 255, 157, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-        
-        .rwa-project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.2);
-        }
-        
-        .value-prop-card {
-            background: rgba(26, 32, 44, 0.6);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-        }
-        
-        .value-prop-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.1);
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            font-weight: bold;
         }
         
         .mobile-menu {
@@ -415,89 +363,19 @@
             color: var(--accent);
         }
         
-        .arrow-connection {
-            position: relative;
-            margin: 20px 0;
-        }
-        
-        .arrow-connection:before {
-            content: '→';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            color: var(--accent);
-            background: rgba(10, 10, 10, 0.9);
-            padding: 10px;
-            border-radius: 50%;
-            z-index: 10;
-        }
-        
-        .arrow-connection:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            z-index: 1;
-        }
-
-        .rwa-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .rwa-tier {
-            margin-bottom: 50px;
-        }
-
-        .tier-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .project-index {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .input-field {
+            background: rgba(26, 32, 44, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .expected-return {
-            background: rgba(0, 255, 157, 0.1);
-            border: 1px solid rgba(0, 255, 157, 0.3);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 15px 0;
-            text-align: center;
-        }
-
-        .return-rate {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
         }
         
+        .input-field:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.2);
+        }
+        
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .desktop-nav {
                 display: none;
@@ -511,28 +389,30 @@
                 font-size: 1.8rem;
             }
             
-            .hero-bg {
-                animation: none;
+            .hero {
+                min-height: 80vh;
             }
             
-            .feature-grid {
-                grid-template-columns: 1fr;
+            .mobile-menu {
+                display: block;
             }
-
-            .rwa-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .arrow-connection:before {
-                content: '↓';
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 70vh;
             }
             
-            .arrow-connection:after {
-                width: 2px;
-                height: 100%;
-                left: 50%;
-                top: 0;
-                background: linear-gradient(180deg, transparent, var(--accent), transparent);
+            .logo-font {
+                font-size: 1.5rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.6rem;
+            }
+            
+            .mobile-menu {
+                width: 100%;
             }
         }
     </style>
@@ -540,17 +420,17 @@
 <body>
     <!-- AI Elements -->
     <div class="ai-element" style="top: 120px; left: 10%;">
-        RWA_ID: AIF-2025 <br>
-        STATUS: 運行中 <br>
-        // AI原生資產系統
+        PROJECT_COUNT: 2,847 <br>
+        STATUS: ACTIVE <br>
+        // AI Film Assetization Online
     </div>
     
     <div class="ai-element" style="bottom: 150px; right: 15%;">
-        TVL: 1000億 AIF <br>
-        HASH: 0x71A9B3...F7E <br>
-        // 區塊鏈驗證
+        AIF_PRICE: $0.127 <br>
+        VOLUME_24H: $3.2M <br>
+        // Blockchain Verified
     </div>
-    
+
     <!-- Data streams -->
     <div class="data-stream" style="left: 20%; animation-delay: 0s;"></div>
     <div class="data-stream" style="left: 40%; animation-delay: 0.5s;"></div>
@@ -560,19 +440,21 @@
     <!-- Navigation -->
     <nav class="navbar fixed w-full z-50 px-4 py-3">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="flex flex-col">
-                <div class="logo-font text-2xl md:text-3xl">HKAIIFF</div>
-                <div class="logo-sub text-xs">AI原生RWA生態</div>
+            <a href="index.html" class="hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
             </a>
             <div class="hidden md:flex space-x-8 desktop-nav">
-                <a href="#about" class="hover:text-blue-400 transition">關於我們</a>
-                <a href="#ecosystem" class="hover:text-blue-400 transition">生態系統</a>
-                <a href="#projects" class="hover:text-blue-400 transition">RWA項目</a>
-                <a href="#participation" class="hover:text-blue-400 transition">如何參與</a>
-                <a href="#value" class="hover:text-blue-400 transition">核心價值</a>
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="hover:text-blue-400 transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+                <a href="sandbox_test.html" class="hover:text-blue-400 transition">沙盒測試</a>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="#join" class="btn-primary px-6 py-2 rounded-full text-sm">立即參與</a>
+                <a href="login_register.html" class="btn-primary px-6 py-2 rounded-full text-sm">登入 / 註冊</a>
+                
                 <button class="md:hidden text-white mobile-menu-btn">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
@@ -585,1395 +467,711 @@
         <div class="mobile-menu-close">
             <i class="fas fa-times"></i>
         </div>
-        
-        <div class="mt-12 flex flex-col space-y-6">
-            <a href="#about" class="text-xl hover:text-blue-400 transition">關於我們</a>
-            <a href="#ecosystem" class="text-xl hover:text-blue-400 transition">生態系統</a>
-            <a href="#projects" class="text-xl hover:text-blue-400 transition">RWA項目</a>
-            <a href="#participation" class="text-xl hover:text-blue-400 transition">如何參與</a>
-            <a href="#value" class="text-xl hover:text-blue-400 transition">核心價值</a>
-            
-            <div class="pt-6 border-t border-gray-700">
-                <button class="btn-primary w-full py-3 rounded-lg font-medium text-center">
-                    立即參與
-                </button>
-            </div>
-        </div>
+        <nav class="mt-10">
+            <a href="asset_market_spot.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (現貨)</a>
+            <a href="asset_market_futures.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (期貨)</a>
+            <a href="assetization_service.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產化服務</a>
+            <a href="data_dashboard.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">數據中心</a>
+            <a href="user_academy.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">用戶學院</a>
+            <a href="sandbox_test.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">沙盒測試</a>
+            <a href="login_register.html" class="block py-3 text-lg btn-primary text-center rounded-full mt-5">登入 / 註冊</a>
+        </nav>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero py-24 min-h-screen">
+    <section class="hero">
         <div class="hero-bg"></div>
         <div class="container mx-auto px-4 hero-content">
-            <div class="max-w-4xl text-center animate-fade-in">
-                <h1 class="text-4xl md:text-7xl font-bold mb-6">
-                    全球首個<br>
-                    <span class="gradient-text">AI原生RWA平台</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-                    香港AI國際電影節打造100億AIF生態代幣，通過區塊鏈技術將AI創意資產通證化，<br>
-                    為全球投資者開啟參與AI創意經濟的全新機遇
-                </p>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center mb-12">
-                    <a href="#participation" class="btn-gold px-10 py-4 rounded-full text-lg font-bold">
-                        獲取AIF代幣
-                    </a>
-                    <a href="#projects" class="btn-secondary px-10 py-4 rounded-full text-lg">
-                        探索RWA項目
-                    </a>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="animate-fade-in">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        讓 AI 影視
+                        <span class="gradient-text">資產化</span>
+                        <br>引領未來娛樂產業
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8">
+                        HKAIFM 是全球首個專注於 AI 影視資產化的綜合平台，透過三維分類體系和創新的期貨現貨權益模式，為創作者與投資者建立透明、高效的價值轉換橋樑。
+                    </p>
+                    
+                    <!-- Dual Channel Entry -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-center">選擇您的身份開始旅程</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Project Creator Entry -->
+                            <a href="assetization_service.html" class="group card p-6 text-center hover:border-blue-400">
+                                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-rocket text-blue-400"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">項目方入口</h4>
+                                <p class="text-sm text-gray-400 mb-4">將您的 AI 影視作品轉化為數位資產，開啟新的商業模式</p>
+                                <div class="btn-primary px-4 py-2 rounded-lg text-sm">
+                                    開始資產化
+                                </div>
+                            </a>
+                            
+                            <!-- Investor Entry -->
+                            <a href="asset_market_spot.html" class="group card p-6 text-center hover:border-green-400">
+                                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-chart-line text-green-400"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">參與方入口</h4>
+                                <p class="text-sm text-gray-400 mb-4">探索優質 AI 影視項目，參與未來娛樂產業的投資機會</p>
+                                <div class="btn-secondary px-4 py-2 rounded-lg text-sm">
+                                    探索投資
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
-                    <div class="stats-card">
-                        <i class="fas fa-coins"></i>
-                        <div class="number">100億</div>
-                        <div class="text-sm">AIF生態代幣</div>
-                    </div>
-                    <div class="stats-card">
-                        <i class="fas fa-film"></i>
-                        <div class="number">26大</div>
-                        <div class="text-sm">核心RWA項目</div>
-                    </div>
-                    <div class="stats-card">
-                        <i class="fas fa-robot"></i>
-                        <div class="number">AI原生</div>
-                        <div class="text-sm">資產通證化</div>
-                    </div>
-                    <div class="stats-card">
-                        <i class="fas fa-globe"></i>
-                        <div class="number">全球</div>
-                        <div class="text-sm">投資機會</div>
+                <!-- Right Content - Market Quick Access -->
+                <div class="animate-slide-right">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center">核心市場快速入口</h3>
+                        
+                        <!-- Futures Market -->
+                        <div class="market-card mb-6 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold text-orange-400">期貨市場</h4>
+                                    <p class="text-sm text-gray-400">高風險高回報投資機會</p>
+                                </div>
+                                <div class="text-3xl text-orange-400">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-orange-400">127</div>
+                                    <div class="text-xs text-gray-400">活躍項目</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-orange-400">24.7%</div>
+                                    <div class="text-xs text-gray-400">平均預期收益</div>
+                                </div>
+                            </div>
+                            <a href="asset_market_futures.html" class="btn-futures w-full py-2 rounded-lg text-center block">
+                                進入期貨市場
+                            </a>
+                        </div>
+                        
+                        <!-- Spot Market -->
+                        <div class="market-card p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-xl font-bold text-green-400">現貨市場</h4>
+                                    <p class="text-sm text-gray-400">穩定收益項目專區</p>
+                                </div>
+                                <div class="text-3xl text-green-400">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-400">89</div>
+                                    <div class="text-xs text-gray-400">穩定項目</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-400">8.3%</div>
+                                    <div class="text-xs text-gray-400">穩定年收益</div>
+                                </div>
+                            </div>
+                            <a href="asset_market_spot.html" class="btn-spot w-full py-2 rounded-lg text-center block">
+                                進入現貨市場
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20">
+    <!-- Real-time Data Dashboard -->
+    <section class="py-16" id="dashboard-data">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 section-title center">
-                    重新定義創意資產價值
-                </h2>
-                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                    在人工智能與區塊鏈技術深度融合的時代，我們正在開創一個全新的金融範式——將AI原生創意資產轉化為現實世界資產，通過通證化為全球投資者提供參與AI創意經濟增長的機會。
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <div class="value-prop-card">
-                    <i class="fas fa-brain text-4xl text-yellow-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">AI原生優勢</h3>
-                    <p class="text-gray-300">
-                        AI創作不受物理限制，可無限複製和衍生。一個成功的AI電影IP可快速生成系列作品，商業價值擴展潛力遠超傳統IP。
-                    </p>
+            <h2 class="text-3xl font-bold text-center mb-12">實時數據大屏</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="stats-card">
+                    <i class="fas fa-cubes"></i>
+                    <div class="number">2,847</div>
+                    <div class="text-sm">總項目數</div>
+                    <div class="text-xs text-green-400 mt-1">↑ 12% 本月</div>
                 </div>
-                
-                <div class="value-prop-card">
-                    <i class="fas fa-chart-line text-4xl text-green-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">可預測性</h3>
-                    <p class="text-gray-300">
-                        AI原生資產通過算法生成，表現可通過大數據分析進行相對準確預測，不存在傳統創作的人為風險因素。
-                    </p>
+                <div class="stats-card">
+                    <i class="fas fa-coins"></i>
+                    <div class="number">$3.2M</div>
+                    <div class="text-sm">24H交易量</div>
+                    <div class="text-xs text-blue-400 mt-1">↑ 8.5% 昨日</div>
                 </div>
-                
-                <div class="value-prop-card">
-                    <i class="fas fa-shield-alt text-4xl text-blue-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">版權明晰</h3>
-                    <p class="text-gray-300">
-                        通過區塊鏈技術，AI原生資產的創作過程、版權歸屬和價值分配都可被完整記錄和驗證，為資產金融化提供堅實法律基礎。
-                    </p>
+                <div class="stats-card">
+                    <i class="fas fa-users"></i>
+                    <div class="number">15,429</div>
+                    <div class="text-sm">活躍用戶</div>
+                    <div class="text-xs text-purple-400 mt-1">↑ 23% 本週</div>
                 </div>
-            </div>
-
-            <div class="card p-8 text-center">
-                <h3 class="text-3xl font-bold mb-4 gradient-text">香港戰略優勢</h3>
-                <div class="grid md:grid-cols-2 gap-8 mt-8">
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-blue-400">國際金融中心</h4>
-                        <p class="text-gray-300">
-                            香港是全球三大金融中心之一，擁有成熟的資本市場和豐富的機構投資者資源，為AIF.RWA提供充足的資本來源。
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-green-400">Web3友好監管</h4>
-                        <p class="text-gray-300">
-                            香港證監會的虛擬資產交易平台發牌制度，為數字資產交易提供清晰合規路徑，使AIF.RWA能在法律保護下創新。
-                        </p>
-                    </div>
+                <div class="stats-card">
+                    <i class="fas fa-trophy"></i>
+                    <div class="number">156</div>
+                    <div class="text-sm">獲獎作品</div>
+                    <div class="text-xs text-yellow-400 mt-1">HKAIIFF認證</div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ecosystem Section -->
-    <section id="ecosystem" class="py-20 bg-gradient-to-b from-transparent to-gray-900">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 section-title center">
-                    四層生態架構
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    AIF.RWA生態系統採用四層架構設計，每一層都服務於特定功能，同時與其他層級形成有機協同關係
-                </p>
-            </div>
-
-            <div class="space-y-12">
-                <!-- Layer 1 -->
-                <div class="card p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-xl font-bold">1</span>
-                        </div>
-                        <h3 class="text-2xl font-bold">資產生成層</h3>
-                    </div>
-                    <div class="grid md:grid-cols-4 gap-6">
-                        <div class="text-center">
-                            <i class="fas fa-video text-3xl text-blue-400 mb-3"></i>
-                            <h4 class="font-bold mb-2">AIF.Center</h4>
-                            <p class="text-sm text-gray-300">全球徵片中心</p>
-                        </div>
-                        <div class="text-center">
-                            <i class="fas fa-vr-cardboard text-3xl text-purple-400 mb-3"></i>
-                            <h4 class="font-bold mb-2">404.world</h4>
-                            <p class="text-sm text-gray-300">互動平台</p>
-                        </div>
-                        <div class="text-center">
-                            <i class="fas fa-user-astronaut text-3xl text-green-400 mb-3"></i>
-                            <h4 class="font-bold mb-2">StarOS</h4>
-                            <p class="text-sm text-gray-300">數字人平台</p>
-                        </div>
-                        <div class="text-center">
-                            <i class="fas fa-graduation-cap text-3xl text-yellow-400 mb-3"></i>
-                            <h4 class="font-bold mb-2">HKAIFA</h4>
-                            <p class="text-sm text-gray-300">AI電影學院</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Layer 2 -->
-                <div class="card p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-xl font-bold">2</span>
-                        </div>
-                        <h3 class="text-2xl font-bold">價值發現層</h3>
-                    </div>
-                    <p class="text-gray-300 mb-6">
-                        負責對AI原生資產進行專業評估和價值定價，確保通證化資產具有可信的價值基礎
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-bold mb-2 text-blue-400">HKAIIFF評審體系</h4>
-                            <p class="text-sm text-gray-300">國際權威評審團專業評估</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-2 text-green-400">AI驅動估值模型</h4>
-                            <p class="text-sm text-gray-300">大數據和機器學習量化分析</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Layer 3 -->
-                <div class="card p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-xl font-bold">3</span>
-                        </div>
-                        <h3 class="text-2xl font-bold">金融化層</h3>
-                    </div>
-                    <p class="text-gray-300 mb-6">
-                        生態系統核心，負責將AI原生資產轉化為可交易的金融產品
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-bold mb-2 text-purple-400">AIF.Exchange</h4>
-                            <p class="text-sm text-gray-300">專業RWA發行、交易和流動性管理</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-2 text-yellow-400">智能合約系統</h4>
-                            <p class="text-sm text-gray-300">自動執行收益分配、治理和風控</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Layer 4 -->
-                <div class="card p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                            <span class="text-xl font-bold">4</span>
-                        </div>
-                        <h3 class="text-2xl font-bold">應用服務層</h3>
-                    </div>
-                    <p class="text-gray-300 mb-6">
-                        將數字資產價值與現實世界連接，提供實際使用場景和消費體驗
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-bold mb-2 text-green-400">AIFCARD數字錢包</h4>
-                            <p class="text-sm text-gray-300">Web3支付解決方案，全球150+國家使用</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-2 text-blue-400">DeFi協議集成</h4>
-                            <p class="text-sm text-gray-300">借貸、質押、流動性挖礦服務</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 section-title center">
-                    AI原生經濟RWA項目完整白皮書集
-                </h2>
-                <p class="text-xl text-gray-300 max-w-4xl mx-auto">
-                    構建Web3時代的創作者價值引擎 - 26個核心RWA項目覆蓋AI創意經濟的各個環節，為投資者提供多元化的數字資產投資機會
-                </p>
-            </div>
-
-            <!-- 第一階段：基礎設施建設項目 -->
-            <div class="rwa-tier">
-                <div class="tier-title">第一階段：基礎設施建設項目 (0-6個月)</div>
-                <div class="rwa-grid">
-                    <!-- Project 1 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">1</div>
-                        <i class="fas fa-user-tie text-4xl text-blue-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">創作者未來收入證券化代幣 (C-FIS)</h3>
-                        <p class="text-gray-300 mb-4">
-                            基於AIFCARD混合信用評估模型，將創作者未來可預測的現金流證券化，提供基於自身信用的直接融資工具。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">預期年化收益</div>
-                            <div class="return-rate">8-15%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 24個月期限證券型代幣</li>
-                            <li>• 月收入5000美元準入門檻</li>
-                            <li>• 智能定價和自動分成執行</li>
-                            <li>• 收入預測模型風險管理</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">2</div>
-                        <i class="fas fa-server text-4xl text-green-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AI電影制作資源池代幣 (PRP-Token)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AI電影制作所需的核心數字資源打包成標準化可交易代幣，讓創作者按需獲取資源，提高制作效率。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">服務類型</div>
-                            <div class="return-rate">按需使用</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• GPU渲染算力代幣</li>
-                            <li>• 分布式存儲空間代幣</li>
-                            <li>• AI模型API調用代幣</li>
-                            <li>• 智能調度和動態定價</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">3</div>
-                        <i class="fas fa-credit-card text-4xl text-purple-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AIF UCard未來收益權合約 (UC-FRC)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AIF UCard業務的未來運營收入進行證券化，讓投資者分享支付業務增長帶來的現金流回報。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">預期年化收益</div>
-                            <div class="return-rate">8-25%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 穩定收益型和增長收益型</li>
-                            <li>• 卡片服務和兌換服務收入</li>
-                            <li>• 全球擴張三階段計劃</li>
-                            <li>• 智能合約實時收益分配</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 4 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">4</div>
-                        <i class="fas fa-toolbox text-4xl text-yellow-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">全鏈條服務打包憑證 (FCS-Voucher)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AIF.Center從內容征集到全球發行的全鏈條服務打包成預付費服務憑證RWA，為電影項目提供一站式解決方案。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">服務價值</div>
-                            <div class="return-rate">2K-50K美元</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 獨立/專業/金牌制作人憑證</li>
-                            <li>• 前期到後期全流程服務</li>
-                            <li>• 可轉讓和模塊化使用</li>
-                            <li>• 全球發行網絡支持</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第二階段：內容創作支持項目 -->
-            <div class="rwa-tier">
-                <div class="tier-title">第二階段：內容創作支持項目 (6-12個月)</div>
-                <div class="rwa-grid">
-                    <!-- Project 5 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">5</div>
-                        <i class="fas fa-book-open text-4xl text-indigo-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">涌現敘事版權NFT (EN-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將404.world中由用戶和AI共同創造、經市場驗證的高價值"平行世界故事線"的知識產權進行NFT化交易。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">資產類型</div>
-                            <div class="return-rate">版權NFT</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 完整故事線版權和改編權</li>
-                            <li>• 市場驗證和專業評審</li>
-                            <li>• 創作溯源數據記錄</li>
-                            <li>• 多元化商業化路徑</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 6 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">6</div>
-                        <i class="fas fa-video text-4xl text-red-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AI導演創作版權基金 (ADF-Fund)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將多位AI導演的創作版權集中管理，形成多元化的版權投資組合，為投資者提供分散風險的AI創作投資工具。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">預期年化收益</div>
-                            <div class="return-rate">12-20%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 多樣化AI導演配置</li>
-                            <li>• 專業版權開發運營</li>
-                            <li>• 動態調整投資組合</li>
-                            <li>• 風險分散質量控制</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 7 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">7</div>
-                        <i class="fas fa-graduation-cap text-4xl text-green-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">創作者技能認證學分代幣 (CSC-Token)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將創作者在HKAIFA獲得的各項技能認證轉化為學分代幣，建立可流轉、可累積、可兌換的技能學分體系。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">學分範圍</div>
-                            <div class="return-rate">5-100學分</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 基礎和高級學分類別</li>
-                            <li>• 課程學習和項目實踐</li>
-                            <li>• 學分交易和應用兌換</li>
-                            <li>• 終身學習賬戶記錄</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 8 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">8</div>
-                        <i class="fas fa-puzzle-piece text-4xl text-pink-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AI工具技能模塊交易市場 (STM-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AI Being通過學習獲得的各種技能模塊化為獨立的NFT資產，在市場上進行交易，讓AI技能成為可流轉的數字資產。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">技能等級</div>
-                            <div class="return-rate">C-S級技能</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 表演/創作/交互技能類別</li>
-                            <li>• 認證評級和質量標準</li>
-                            <li>• 拍賣/固定價格/租賃模式</li>
-                            <li>• 兼容性檢查和升級機制</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第三階段：高端服務項目 -->
-            <div class="rwa-tier">
-                <div class="tier-title">第三階段：高端服務項目 (12-18個月)</div>
-                <div class="rwa-grid">
-                    <!-- Project 9 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">9</div>
-                        <i class="fas fa-star text-4xl text-yellow-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">明星數字孿生價值錨定資產 (SDT-VA)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將真實世界明星的"數字生命權"整體打包成可長期持有的基礎性RWA，將明星未來在AI原生世界中的全部商業價值進行證券化。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">預期年化收益</div>
-                            <div class="return-rate">15-30%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 數字形象授權收益權</li>
-                            <li>• 互動體驗和衍生品收益</li>
-                            <li>• 數據價值收益分享</li>
-                            <li>• 持有者治理投票權</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 10 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">10</div>
-                        <i class="fas fa-crown text-4xl text-purple-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">A1俱樂部入場券衍生品 (A1C-AP)</h3>
-                        <p class="text-gray-300 mb-4">
-                            在保護A1 CLUB核心價值的前提下，將特定時間段的部分使用權進行代幣化，創造稀缺權益的有限流動性。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">會員分成</div>
-                            <div class="return-rate">80%收益</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 分時租賃模式</li>
-                            <li>• 全球會所網絡使用權</li>
-                            <li>• 保護核心會員權益</li>
-                            <li>• 智能托管和身份驗證</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 11 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">11</div>
-                        <i class="fas fa-microphone text-4xl text-blue-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">StarOS數字人"通告"服務合約 (DSC-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將StarOS平台明星數字人的未來"工作時間"或"服務容量"打包成標準化服務合約RWA，為明星數字人的商業價值提供可預售的交易模式。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">服務價格</div>
-                            <div class="return-rate">500-50K美元</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 廣告代言/互動娛樂合約</li>
-                            <li>• 分級定價體系</li>
-                            <li>• 質量保證和監督</li>
-                            <li>• 智能合約執行</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 12 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">12</div>
-                        <i class="fas fa-theater-masks text-4xl text-red-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">虛擬演出場地租賃權 (VVR-License)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將404.world中的標誌性虛擬演出場地的租賃權代幣化，為各類虛擬活動提供高品質的場地服務。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">場地收益分配</div>
-                            <div class="return-rate">60%分成</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 大型演出和特殊主題場地</li>
-                            <li>• 基礎到增值服務包</li>
-                            <li>• 時段差異化定價</li>
-                            <li>• 專業管理和維護</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第四階段：國際化拓展項目 -->
-            <div class="rwa-tier">
-                <div class="tier-title">第四階段：國際化拓展項目 (18-24個月)</div>
-                <div class="rwa-grid">
-                    <!-- Project 13 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">13</div>
-                        <i class="fas fa-university text-4xl text-indigo-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">香港AI電影學院區域合作中心許可證 (RPL-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將HKAIFA在特定地區的特許經營權代幣化，為學院全球擴張提供資金支持和本地化運營能力。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">許可類型</div>
-                            <div class="return-rate">標準/旗艦/創新</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 品牌使用和課程授權</li>
-                            <li>• 建設標準和監督機制</li>
-                            <li>• 收益分配和激勵機制</li>
-                            <li>• 升級路徑和退出保障</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 14 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">14</div>
-                        <i class="fas fa-network-wired text-4xl text-green-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AIFCARD全球支付網絡節點權 (GPN-License)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AIFCARD在特定國家或地區的支付清算網絡運營節點權利作為RWA授權，加速全球化落地和合規進程。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">手續費分成</div>
-                            <div class="return-rate">25-40%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 區域業務推廣和運營權</li>
-                            <li>• 合規責任和資質要求</li>
-                            <li>• 交易費用和用戶發展獎勵</li>
-                            <li>• 技術支持和人員培訓</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 15 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">15</div>
-                        <i class="fas fa-globe text-4xl text-blue-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">HKAIIFF全球征片網絡節點經營權 (GSN-Node)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將AIF.Center在全球重點城市設立的"地方征片節點"的經營權作為可投資的RWA，深度綁定本地創作者資源。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">節點分成</div>
-                            <div class="return-rate">10-15%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 一/二/三級節點權限</li>
-                            <li>• 征片推廣和創作者發掘</li>
-                            <li>• 多重收益流和動態分成</li>
-                            <li>• 總部支持和質量監督</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 16 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">16</div>
-                        <i class="fas fa-ticket-alt text-4xl text-purple-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">全球電影節聯盟通行證 (GFF-Pass)</h3>
-                        <p class="text-gray-300 mb-4">
-                            與全球主要電影節建立合作關係，發行可在多個電影節使用的通行證NFT，為電影愛好者和專業人士提供便利。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">通行證等級</div>
-                            <div class="return-rate">標準/高級/鑽石</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 戛納、威尼斯等頂級電影節</li>
-                            <li>• 行程規劃和專業網絡服務</li>
-                            <li>• 虛擬參與和AI個性化推薦</li>
-                            <li>• 技術創新和體驗優化</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 第五階段：高級金融工具項目 -->
-            <div class="rwa-tier">
-                <div class="tier-title">第五階段：高級金融工具項目 (24個月後)</div>
-                <div class="rwa-grid">
-                    <!-- Project 17 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">17</div>
-                        <i class="fas fa-shield-alt text-4xl text-orange-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AIF.Market項目融資違約信用互換 (CDS-RWA)</h3>
-                        <p class="text-gray-300 mb-4">
-                            為AIF.Market上通過FilmToken融資的AI電影項目創建去中心化的信用違約互換市場，為高風險電影投資提供重要的風險管理工具。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">保費年化</div>
-                            <div class="return-rate">3-8%</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 保障買方和賣方代幣</li>
-                            <li>• 明確違約事件定義</li>
-                            <li>• 動態風險評估和流動性管理</li>
-                            <li>• 價格發現和風險管理工具</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 18 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">18</div>
-                        <i class="fas fa-brain text-4xl text-cyan-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AI創作工具知識產權許可RWA (AIT-IPL)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將生態系統內專有AI創作工具的知識產權及其未來許可收入作為RWA代幣化，為AI技術研發提供新的融資渠道。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">收益分配</div>
-                            <div class="return-rate">50%給持有者</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 涌現式敘事引擎</li>
-                            <li>• 智能角色設計器</li>
-                            <li>• B2B授權和定制開發</li>
-                            <li>• 治理參與和IP保護</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 19 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">19</div>
-                        <i class="fas fa-chart-line text-4xl text-emerald-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">虛擬資產管理服務代幣 (VAM-Token)</h3>
-                        <p class="text-gray-300 mb-4">
-                            為生態內的各種虛擬資產提供專業的管理服務，包括投資組合優化、風險管理、稅務籌劃等，服務以代幣形式預付費購買。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">服務套餐</div>
-                            <div class="return-rate">100-2000美元/月</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 基礎/專業/精英/定制服務</li>
-                            <li>• AI輔助智能分析</li>
-                            <li>• 自動化執行和風險控制</li>
-                            <li>• 合規保障和透明披露</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 20 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">20</div>
-                        <i class="fas fa-handshake text-4xl text-amber-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">AI數字生命經紀合約 (ADEA)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將BeingOS創造的頂級AI原生數字生命的"獨家經紀權"作為RWA進行代幣化，創造AI星探和AI經紀人職業。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">合約期限</div>
-                            <div class="return-rate">3年期NFT</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 商業代理權和培養決策權</li>
-                            <li>• 20%佣金和IP開發權</li>
-                            <li>• AI虛擬藝人事務所DAO</li>
-                            <li>• 技能模塊化交易</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 21 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">21</div>
-                        <i class="fas fa-film text-4xl text-rose-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">影視內容區域發行權合約 (DRC-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將影視作品的區域發行權標準化為智能合約NFT，提高發行權交易的效率和全球流動性。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">合約期限</div>
-                            <div class="return-rate">2-3年窗口期</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 地域/時間/渠道權限標準化</li>
-                            <li>• 智能合約自動執行</li>
-                            <li>• 全球化交易和透明定價</li>
-                            <li>• 降低交易成本提高效率</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 22 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">22</div>
-                        <i class="fas fa-trophy text-4xl text-gold-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">獨角獸金獎期望權證 (UGA-EW)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將HKAIIFF最高獎項"獨角獸金獎"的獲獎預期進行代幣化，創造基於電影節權威性的預測市場RWA。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">權證類型</div>
-                            <div class="return-rate">單片/排名/綜合</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 獲獎得1 USDT，未獲獎歸零</li>
-                            <li>• 入圍名單公布後自動發行</li>
-                            <li>• 價格發現和情緒指標</li>
-                            <li>• 衍生產品開發擴展</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 23 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">23</div>
-                        <i class="fas fa-building text-4xl text-teal-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">404.world品牌平行世界地契 (BPW-Deed)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將404.world平台內品牌定制的"平行世界"所有權和運營權打包成RWA，為品牌提供元宇宙營銷的永久陣地。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">地契類型</div>
-                            <div class="return-rate">基礎/高級/超級IP</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 固定空間到整個IP宇宙分區</li>
-                            <li>• AI NPC配置和剧情定制</li>
-                            <li>• Phygital聯動和數據驅動營銷</li>
-                            <li>• 技術和營銷支持服務</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 24 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">24</div>
-                        <i class="fas fa-gem text-4xl text-violet-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">BeingOS"創世AI生命體"分時租賃權 (GBL-NFT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將BeingOS平台創造的具有里程碑意義的"創世"級AI數字生命的"使用權"進行分時租賃，讓開發者和創作者能夠短期調用頂級AI資源。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">租賃期限</div>
-                            <div class="return-rate">24小時-1週</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 歷史意義和能力特殊級別</li>
-                            <li>• 基礎/高級/專業租賃權</li>
-                            <li>• 動態定價和競拍機制</li>
-                            <li>• 使用監控和知識產權保護</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 25 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">25</div>
-                        <i class="fas fa-certificate text-4xl text-lime-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">香港AI電影學院認證課程IP代幣 (CC-IPT)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將HKAIFA開發的王牌認證課程的知識產權和未來全球授權收入作為RWA代幣化，為優質教育內容的研發和推廣提供新的融資方式。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">收益分配</div>
-                            <div class="return-rate">50%給持有者</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• Web3內容架構師認證</li>
-                            <li>• AI電影制作專業認證</li>
-                            <li>• 數字資產管理認證</li>
-                            <li>• 授權和直接銷售收入</li>
-                        </ul>
-                    </div>
-
-                    <!-- Project 26 -->
-                    <div class="rwa-project-card">
-                        <div class="project-index">26</div>
-                        <i class="fas fa-star-of-life text-4xl text-orange-400 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-4">HKAIIFF獲獎影片組合資產包 (AGW-Portfolio)</h3>
-                        <p class="text-gray-300 mb-4">
-                            將每年HKAIIFF核心獲獎影片的未來三年全球淨收益權打包成組合資產包，為投資者提供多元化的AI電影投資工具。
-                        </p>
-                        <div class="expected-return">
-                            <div class="text-sm text-gray-400">收益期限</div>
-                            <div class="return-rate">3年收益權</div>
-                        </div>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li>• 獨角獸金獎及主要獎項獲獎片</li>
-                            <li>• 30%票房+25%流媒體+20%版權</li>
-                            <li>• 多樣化配置和時間分散</li>
-                            <li>• 專業評估和動態管理</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 實施路線圖說明 -->
-            <div class="card p-8 mt-12">
-                <h3 class="text-3xl font-bold mb-6 text-center gradient-text">實施路線圖與總體規劃</h3>
-                <div class="grid md:grid-cols-5 gap-6">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-xl font-bold">第1階段</span>
-                        </div>
-                        <h4 class="font-bold mb-2">基礎設施建設</h4>
-                        <p class="text-sm text-gray-400">0-6個月<br>4個核心項目啟動</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-xl font-bold">第2階段</span>
-                        </div>
-                        <h4 class="font-bold mb-2">內容創作支持</h4>
-                        <p class="text-sm text-gray-400">6-12個月<br>生態擴展完善</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-xl font-bold">第3階段</span>
-                        </div>
-                        <h4 class="font-bold mb-2">高端服務</h4>
-                        <p class="text-sm text-gray-400">12-18個月<br>明星和高端用戶</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-xl font-bold">第4階段</span>
-                        </div>
-                        <h4 class="font-bold mb-2">國際化拓展</h4>
-                        <p class="text-sm text-gray-400">18-24個月<br>全球化運營</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-xl font-bold">第5階段</span>
-                        </div>
-                        <h4 class="font-bold mb-2">高級金融工具</h4>
-                        <p class="text-sm text-gray-400">24個月後<br>持續優化創新</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Participation Section -->
-    <section id="participation" class="py-20 bg-gradient-to-b from-gray-900 to-transparent">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 section-title center">
-                    如何參與RWA投資
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    持有AIF生態代幣是參與所有RWA項目投資的前提條件，以下是詳細的參與流程
-                </p>
-            </div>
-
-            <div class="max-w-4xl mx-auto">
-                <!-- Step 1 -->
-                <div class="step-card mb-8">
-                    <div class="step-number">1</div>
-                    <h3 class="text-2xl font-bold mb-4 ml-16">獲取AIF生態代幣</h3>
-                    <p class="text-gray-300 mb-6 ml-16">
-                        AIF代幣是參與整個生態系統的入場券。你需要先獲取AIF代幣才能參與任何RWA項目投資。
-                    </p>
-                    <div class="grid md:grid-cols-3 gap-4 ml-16">
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <h4 class="font-bold text-blue-400 mb-2">交易所購買</h4>
-                            <p class="text-sm text-gray-400">在支持的加密貨幣交易所購買AIF代幣</p>
-                        </div>
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <h4 class="font-bold text-green-400 mb-2">生態參與獲得</h4>
-                            <p class="text-sm text-gray-400">通過創作內容、提供服務獲得AIF獎勵</p>
-                        </div>
-                        <div class="bg-gray-800 p-4 rounded-lg">
-                            <h4 class="font-bold text-purple-400 mb-2">合作夥伴推薦</h4>
-                            <p class="text-sm text-gray-400">通過官方合作夥伴渠道獲取AIF代幣</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-connection"></div>
-
-                <!-- Step 2 -->
-                <div class="step-card mb-8">
-                    <div class="step-number">2</div>
-                    <h3 class="text-2xl font-bold mb-4 ml-16">質押AIF代幣</h3>
-                    <p class="text-gray-300 mb-6 ml-16">
-                        將AIF代幣質押到智能合約中，根據質押數量和時間長度獲得不同等級的投資權限。
-                    </p>
-                    <div class="grid md:grid-cols-3 gap-4 ml-16">
-                        <div class="bg-gradient-to-r from-yellow-600 to-yellow-400 p-4 rounded-lg text-black">
-                            <h4 class="font-bold mb-2">黃金級</h4>
-                            <p class="text-sm">質押100萬+ AIF</p>
-                            <p class="text-sm">所有項目優先投資權</p>
-                        </div>
-                        <div class="bg-gradient-to-r from-gray-400 to-gray-200 p-4 rounded-lg text-black">
-                            <h4 class="font-bold mb-2">白銀級</h4>
-                            <p class="text-sm">質押10萬+ AIF</p>
-                            <p class="text-sm">高收益項目投資權</p>
-                        </div>
-                        <div class="bg-gradient-to-r from-orange-600 to-orange-400 p-4 rounded-lg text-black">
-                            <h4 class="font-bold mb-2">青銅級</h4>
-                            <p class="text-sm">質押1萬+ AIF</p>
-                            <p class="text-sm">基礎項目投資權</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-connection"></div>
-
-                <!-- Step 3 -->
-                <div class="step-card mb-8">
-                    <div class="step-number">3</div>
-                    <h3 class="text-2xl font-bold mb-4 ml-16">選擇RWA項目</h3>
-                    <p class="text-gray-300 mb-6 ml-16">
-                        根據你的風險偏好和投資目標，從26個核心RWA項目中選擇適合的投資標的。
-                    </p>
-                    <div class="bg-gray-800 p-6 rounded-lg ml-16">
-                        <h4 class="font-bold mb-4 text-blue-400">項目篩選標準</h4>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <h5 class="font-semibold mb-2">低風險項目</h5>
-                                <ul class="text-sm text-gray-400 space-y-1">
-                                    <li>• 創作者收入證券化 (8-15%收益)</li>
-                                    <li>• 教育認證IP代幣 (12-20%收益)</li>
-                                    <li>• 獲獎影片組合資產 (10-18%收益)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h5 class="font-semibold mb-2">高收益項目</h5>
-                                <ul class="text-sm text-gray-400 space-y-1">
-                                    <li>• 明星數字孿生資產 (15-30%收益)</li>
-                                    <li>• AI導演版權基金 (12-20%收益)</li>
-                                    <li>• 支付網絡節點權 (25-40%收益)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-connection"></div>
-
-                <!-- Step 4 -->
-                <div class="step-card mb-8">
-                    <div class="step-number">4</div>
-                    <h3 class="text-2xl font-bold mb-4 ml-16">參與項目投資</h3>
-                    <p class="text-gray-300 mb-6 ml-16">
-                        使用質押的AIF代幣參與選定的RWA項目投資，獲得對應的RWA代幣。
-                    </p>
-                    <div class="bg-gray-800 p-6 rounded-lg ml-16">
-                        <h4 class="font-bold mb-4 text-green-400">投資過程</h4>
-                        <div class="grid md:grid-cols-4 gap-4">
-                            <div class="text-center">
-                                <i class="fas fa-file-alt text-2xl text-blue-400 mb-2"></i>
-                                <p class="text-sm">審查項目白皮書</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="fas fa-calculator text-2xl text-green-400 mb-2"></i>
-                                <p class="text-sm">計算投資金額</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="fas fa-signature text-2xl text-purple-400 mb-2"></i>
-                                <p class="text-sm">簽署智能合約</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="fas fa-coins text-2xl text-yellow-400 mb-2"></i>
-                                <p class="text-sm">獲得RWA代幣</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="arrow-connection"></div>
-
-                <!-- Step 5 -->
-                <div class="step-card">
-                    <div class="step-number">5</div>
-                    <h3 class="text-2xl font-bold mb-4 ml-16">享受收益與權益</h3>
-                    <p class="text-gray-300 mb-6 ml-16">
-                        持有RWA代幣後，你將自動獲得項目產生的收益分配，同時享受各種額外權益。
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-6 ml-16">
-                        <div class="bg-gray-800 p-6 rounded-lg">
-                            <h4 class="font-bold mb-4 text-blue-400">自動收益分配</h4>
-                            <ul class="text-sm text-gray-400 space-y-2">
-                                <li>• 智能合約自動分配收益</li>
-                                <li>• 實時結算，無需等待</li>
-                                <li>• 透明計算，鏈上可查</li>
-                                <li>• 支持複合收益再投資</li>
-                            </ul>
-                        </div>
-                        <div class="bg-gray-800 p-6 rounded-lg">
-                            <h4 class="font-bold mb-4 text-green-400">額外權益</h4>
-                            <ul class="text-sm text-gray-400 space-y-2">
-                                <li>• 參與項目治理投票</li>
-                                <li>• 獲得NFT紀念品空投</li>
-                                <li>• 享受電影節VIP待遇</li>
-                                <li>• 優先參與新項目投資</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-12">
-                <a href="#join" class="btn-gold px-12 py-4 rounded-full text-xl font-bold">
-                    立即開始投資之旅
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Section -->
-    <section id="value" class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 section-title center">
-                    AIF.RWA核心價值
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    我們的生態系統為投資者、創作者和整個AI創意產業帶來前所未有的價值
-                </p>
-            </div>
-
-            <div class="feature-grid">
-                <!-- Market Innovation -->
-                <div class="card p-8">
-                    <i class="fas fa-rocket text-4xl text-blue-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">市場創新價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        開創全球首個AI原生RWA平台，將AI創意資產金融化，為投資者開啟全新的高增長投資領域。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• 100億AIF生態代幣規模</li>
-                        <li>• 填補AI資產金融化空白</li>
-                        <li>• 創造新的資產類別</li>
-                    </ul>
-                </div>
-
-                <!-- Technology Leadership -->
-                <div class="card p-8">
-                    <i class="fas fa-brain text-4xl text-purple-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">技術領先價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        採用最先進的AI技術和區塊鏈架構，實現內容創作到價值實現的完整閉環。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• AI-Native技術架構</li>
-                        <li>• 多鏈兼容性支持</li>
-                        <li>• 智能合約創新應用</li>
-                    </ul>
-                </div>
-
-                <!-- Economic Model -->
-                <div class="card p-8">
-                    <i class="fas fa-chart-line text-4xl text-green-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">經濟模式價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        建立可持續的通縮經濟模型，確保AIF代幣長期價值增長和生態系統健康發展。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• 多元化收入來源</li>
-                        <li>• 通縮機制保障</li>
-                        <li>• 價值循環增強</li>
-                    </ul>
-                </div>
-
-                <!-- Global Reach -->
-                <div class="card p-8">
-                    <i class="fas fa-globe text-4xl text-yellow-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">全球化價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        利用香港國際金融中心優勢，連接全球資本市場，為AI創意產業提供國際化發展平台。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• 香港監管優勢</li>
-                        <li>• 國際資本接入</li>
-                        <li>• 全球市場覆蓋</li>
-                    </ul>
-                </div>
-
-                <!-- Risk Management -->
-                <div class="card p-8">
-                    <i class="fas fa-shield-alt text-4xl text-red-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">風險管控價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        建立完善的風險控制體系，通過多重審計、保險機制和合規運營保護投資者利益。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• 多重安全審計</li>
-                        <li>• 專業保險保障</li>
-                        <li>• 合規經營承諾</li>
-                    </ul>
-                </div>
-
-                <!-- Social Impact -->
-                <div class="card p-8">
-                    <i class="fas fa-heart text-4xl text-pink-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-4">社會影響價值</h3>
-                    <p class="text-gray-300 mb-6">
-                        推動創意產業民主化，降低創作門檻，讓更多人能夠參與和受益於AI創意經濟的發展。
-                    </p>
-                    <ul class="text-gray-400 space-y-2">
-                        <li>• 創作門檻降低</li>
-                        <li>• 收益分配公平</li>
-                        <li>• 文化多元發展</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="join" class="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">
-                加入AI創意經濟革命
-            </h2>
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                立即獲取AIF生態代幣，成為全球首個AI原生RWA平台的早期投資者
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center mb-12">
-                <button class="btn-gold px-12 py-4 rounded-full text-xl font-bold">
-                    獲取AIF代幣
-                </button>
-                <button class="btn-secondary px-12 py-4 rounded-full text-xl">
-                    加入電報群
-                </button>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
-                <div>
-                    <div class="text-3xl font-bold text-yellow-400">100億</div>
-                    <div class="text-sm">AIF生態代幣</div>
+            <!-- AIF Token Price -->
+            <div class="card p-8 text-center mb-12">
+                <h3 class="text-xl font-bold mb-4">AIF 代幣實時價格</h3>
+                <div class="flex items-center justify-center space-x-8">
+                    <div>
+                        <div class="text-4xl font-bold gradient-text">$0.127</div>
+                        <div class="text-sm text-gray-400">當前價格</div>
+                    </div>
+                    <div class="text-green-400">
+                        <div class="text-2xl font-bold">+15.7%</div>
+                        <div class="text-sm">24H變化</div>
+                    </div>
+                    <div>
+                        <div class="text-xl font-bold">$45.2M</div>
+                        <div class="text-sm text-gray-400">市場價值</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="text-3xl font-bold text-blue-400">26大</div>
-                    <div class="text-sm">RWA項目</div>
+            </div>
+            
+            <!-- Hot Projects -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6">熱門項目排行</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold">1</div>
+                                <div>
+                                    <h4 class="font-bold">數位夢境</h4>
+                                    <div class="text-xs text-gray-400">【期貨|分紅型|AI影視】</div>
+                                </div>
+                            </div>
+                            <div class="text-green-400 font-bold">+32%</div>
+                        </div>
+                        <div class="text-sm text-gray-400">融資進度: 87%</div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold">2</div>
+                                <div>
+                                    <h4 class="font-bold">量子傳說</h4>
+                                    <div class="text-xs text-gray-400">【現貨|買斷型|AI工具】</div>
+                                </div>
+                            </div>
+                            <div class="text-green-400 font-bold">+28%</div>
+                        </div>
+                        <div class="text-sm text-gray-400">穩定收益: 8.3%</div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold">3</div>
+                                <div>
+                                    <h4 class="font-bold">星際漫遊</h4>
+                                    <div class="text-xs text-gray-400">【期貨|分紅型|AI模型】</div>
+                                </div>
+                            </div>
+                            <div class="text-green-400 font-bold">+25%</div>
+                        </div>
+                        <div class="text-sm text-gray-400">風險等級: A級</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="text-3xl font-bold text-green-400">AI原生</div>
-                    <div class="text-sm">資產通證化</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Trust Foundation -->
+    <section class="py-16 bg-gradient-to-br from-gray-900 to-gray-800" id="trust">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">平台信任基石</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="trust-card">
+                    <div class="text-4xl mb-4 text-blue-400">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">審核透明度</h3>
+                    <div class="text-3xl font-bold gradient-text mb-2">99.2%</div>
+                    <p class="text-sm text-gray-400">動態權重審核機制，確保項目質量</p>
                 </div>
-                <div>
-                    <div class="text-3xl font-bold text-purple-400">全球</div>
-                    <div class="text-sm">投資機會</div>
+                
+                <div class="trust-card">
+                    <div class="text-4xl mb-4 text-green-400">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">安全保障</h3>
+                    <div class="text-3xl font-bold gradient-text mb-2">100%</div>
+                    <p class="text-sm text-gray-400">第三方安全審計，資金安全有保障</p>
                 </div>
+                
+                <div class="trust-card">
+                    <div class="text-4xl mb-4 text-purple-400">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">法律合規</h3>
+                    <div class="text-3xl font-bold gradient-text mb-2">AAA</div>
+                    <p class="text-sm text-gray-400">完整監管合規框架，合法經營</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="text-4xl mb-4 text-yellow-400">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">成功率</h3>
+                    <div class="text-3xl font-bold gradient-text mb-2">94.8%</div>
+                    <p class="text-sm text-gray-400">項目成功完成率，投資者信心保障</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three-Dimensional Classification System -->
+    <section class="py-16" id="classification">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">創新三維分類體系</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    HKAIFM 獨創的三維分類系統，讓投資者可以精準匹配風險偏好與投資策略，為 AI 影視資產化建立行業標準。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- First Dimension -->
+                <div class="card p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4 text-blue-400">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">第一維度：權益階段</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-orange-500 bg-opacity-20 border border-orange-500 rounded-lg p-4">
+                            <h4 class="font-bold text-orange-400 mb-2">期貨權益</h4>
+                            <p class="text-sm text-gray-300">項目發展階段投資，高風險高回報</p>
+                        </div>
+                        <div class="bg-green-500 bg-opacity-20 border border-green-500 rounded-lg p-4">
+                            <h4 class="font-bold text-green-400 mb-2">現貨權益</h4>
+                            <p class="text-sm text-gray-300">成熟項目投資，穩定收益導向</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Second Dimension -->
+                <div class="card p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4 text-purple-400">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">第二維度：發行模式</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-blue-500 bg-opacity-20 border border-blue-500 rounded-lg p-4">
+                            <h4 class="font-bold text-blue-400 mb-2">分紅型</h4>
+                            <p class="text-sm text-gray-300">長期持有，參與項目收益分配與治理</p>
+                        </div>
+                        <div class="bg-purple-500 bg-opacity-20 border border-purple-500 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">買斷型</h4>
+                            <p class="text-sm text-gray-300">獨家控制權，完整資產所有權</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Third Dimension -->
+                <div class="card p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4 text-green-400">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">第三維度：資產類型</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-red-500 bg-opacity-20 border border-red-500 rounded-lg p-3">
+                            <h4 class="font-bold text-red-400 text-sm">AI影視作品</h4>
+                        </div>
+                        <div class="bg-yellow-500 bg-opacity-20 border border-yellow-500 rounded-lg p-3">
+                            <h4 class="font-bold text-yellow-400 text-sm">AI創作工具</h4>
+                        </div>
+                        <div class="bg-cyan-500 bg-opacity-20 border border-cyan-500 rounded-lg p-3">
+                            <h4 class="font-bold text-cyan-400 text-sm">AI技術模型</h4>
+                        </div>
+                        <div class="bg-indigo-500 bg-opacity-20 border border-indigo-500 rounded-lg p-3">
+                            <h4 class="font-bold text-indigo-400 text-sm">技術解決方案</h4>
+                        </div>
+                        <div class="bg-pink-500 bg-opacity-20 border border-pink-500 rounded-lg p-3">
+                            <h4 class="font-bold text-pink-400 text-sm">產業數據資源</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Transformation Process -->
+    <section class="py-16 bg-gradient-to-br from-blue-900 to-purple-900" id="process">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">價值轉化完整流程</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-4 text-blue-400">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">AI 影視創作</h3>
+                        <p class="text-gray-300">
+                            使用先進 AI 技術創造影視內容、工具或模型，具備商業化潛力和獨特價值
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-4 text-purple-400">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">智能資產化</h3>
+                        <p class="text-gray-300">
+                            通過三維分類路径向導，智能匹配最優資產化方案，生成數位權益代幣
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-4 text-green-400">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">投資收益分享</h3>
+                        <p class="text-gray-300">
+                            投資者參與項目收益分配，創作者獲得資金支持，實現多方共贏的生態價值
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HKAIIFF Film Festival Integration -->
+    <section class="py-16" id="festival">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">
+                        <span class="gradient-text">HKAIIFF</span> 電影節深度整合
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        香港 AI 國際影展（HKAIIFF）與 HKAIFM 平台深度整合，為獲獎作品提供快速資產化通道，建立藝術價值與商業價值的完美橋樑。
+                    </p>
+                    
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start space-x-4">
+                            <div class="text-2xl text-yellow-400 mt-1">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">獲獎作品優先通道</h3>
+                                <p class="text-gray-400">電影節獲獎作品享有快速審核和資產化綠色通道</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="text-2xl text-blue-400 mt-1">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">權威認證標識</h3>
+                                <p class="text-gray-400">HKAIIFF 官方認證，提升項目可信度和投資價值</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="text-2xl text-green-400 mt-1">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">專業評估加速</h3>
+                                <p class="text-gray-400">專業評審團隊提供快速評估，縮短上線週期</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#festival-trading" class="btn-primary px-8 py-3 rounded-lg font-medium inline-block">
+                        進入電影節專區
+                    </a>
+                </div>
+                
+                <div class="relative">
+                    <div class="card p-8">
+                        <h3 class="text-xl font-bold mb-6 text-center">最新電影節動態</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-yellow-500 to-orange-500 bg-opacity-20 rounded-lg">
+                                <div class="text-2xl text-yellow-400">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">《未來視界》榮獲最佳AI影片</h4>
+                                    <p class="text-sm text-gray-400">已開啟快速資產化通道</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-20 rounded-lg">
+                                <div class="text-2xl text-blue-400">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">156 部作品正在資產化</h4>
+                                    <p class="text-sm text-gray-400">總價值超過 $12.3M</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-green-500 to-blue-500 bg-opacity-20 rounded-lg">
+                                <div class="text-2xl text-green-400">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">下屆電影節報名開啟</h4>
+                                    <p class="text-sm text-gray-400">2024年3月15日截止</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Award Badge -->
+                    <div class="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black p-3 rounded-xl transform rotate-12 shadow-lg">
+                        <div class="text-sm font-bold">官方認證</div>
+                        <div class="text-xs">HKAIIFF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Navigation -->
+    <section class="py-16 bg-gradient-to-br from-gray-900 to-black" id="ecosystem">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">HKAIFM 生態矩陣</h2>
+            <p class="text-xl text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+                「6+1+1」完整生態架構，為AI影視產業提供從教育、創作、資產化到交易的全鏈條服務
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- HKAIFA Academy -->
+                <div class="card p-6 group hover:border-blue-400">
+                    <div class="text-4xl mb-4 text-blue-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">HKAIFA 學院</h3>
+                    <p class="text-gray-400 mb-4">AI影視專業教育體系，培養行業頂尖人才</p>
+                    <a href="user_academy.html" class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- HKAIIFF Festival -->
+                <div class="card p-6 group hover:border-yellow-400">
+                    <div class="text-4xl mb-4 text-yellow-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">HKAIIFF 電影節</h3>
+                    <p class="text-gray-400 mb-4">全球AI影視作品展示與交流平台</p>
+                    <a href="#festival" class="text-yellow-400 hover:text-yellow-300 text-sm font-medium">
+                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 404.world -->
+                <div class="card p-6 group hover:border-purple-400">
+                    <div class="text-4xl mb-4 text-purple-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">404.world</h3>
+                    <p class="text-gray-400 mb-4">元宇宙虛擬展示與數位人互動平台</p>
+                    <a href="#metaverse" class="text-purple-400 hover:text-purple-300 text-sm font-medium">
+                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- AIF.Exchange -->
+                <div class="card p-6 group hover:border-green-400">
+                    <div class="text-4xl mb-4 text-green-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AIF.Exchange</h3>
+                    <p class="text-gray-400 mb-4">專業AI影視資產二級交易平台</p>
+                    <a href="#exchange" class="text-green-400 hover:text-green-300 text-sm font-medium">
+                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- AIF.Center -->
+                <div class="card p-6 group hover:border-red-400">
+                    <div class="text-4xl mb-4 text-red-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AIF.Center</h3>
+                    <p class="text-gray-400 mb-4">專業諮詢與技術服務中心</p>
+                    <a href="#center" class="text-red-400 hover:text-red-300 text-sm font-medium">
+                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- HKAIFM Core -->
+                <div class="card p-6 group hover:border-cyan-400 bg-gradient-to-br from-cyan-500 to-blue-500 bg-opacity-20">
+                    <div class="text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">HKAIFM 核心</h3>
+                    <p class="text-gray-400 mb-4">AI影視資產化與投資交易核心平台</p>
+                    <div class="text-cyan-400 text-sm font-medium">
+                        您目前所在平台 <i class="fas fa-check ml-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">加入 AI 影視資產化革命</h2>
+                <p class="text-xl text-gray-200 mb-8">
+                    訂閱我們的電子報，獲取最新項目動態、獨家投資機會和行業深度分析
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="輸入您的電子郵件" class="input-field rounded-full px-6 py-3 w-full">
+                    <button class="btn-primary px-8 py-3 rounded-full font-medium whitespace-nowrap">
+                        立即訂閱
+                    </button>
+                </div>
+                <p class="text-sm text-gray-400 mt-4">
+                    訂閱即表示您同意我們的 <a href="#" class="text-blue-400">隱私政策</a> 和 <a href="#" class="text-blue-400">服務條款</a>
+                </p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 bg-gray-900">
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
                 <div>
-                    <a href="#" class="flex flex-col mb-4">
-                        <div class="logo-font text-2xl">HKAIIFF</div>
-                        <div class="logo-sub text-xs">AI原生RWA生態</div>
+                    <a href="index.html" class="hkaifm-logo mb-4 block">
+                        <div class="logo-font text-2xl">HKAIFM</div>
+                        <div class="logo-sub text-xs">AI FILM MARKET</div>
                     </a>
-                    <p class="text-gray-400 mb-4">
-                        通過AI與區塊鏈技術，重新定義創意資產價值，開創100億AIF生態代幣的全新金融範式。
+                    <p class="text-gray-400 text-sm mt-4">
+                        全球AI影視資產化領導平台，連接創作者與投資者。
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-medium"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-github"></i></a>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-telegram-plane text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-medium-m text-xl"></i></a>
                     </div>
                 </div>
+                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">生態系統</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">AIF.Exchange</a></li>
-                        <li><a href="#" class="hover:text-white">AIF.Center</a></li>
-                        <li><a href="#" class="hover:text-white">404.world</a></li>
-                        <li><a href="#" class="hover:text-white">StarOS</a></li>
-                        <li><a href="#" class="hover:text-white">HKAIFA</a></li>
-                        <li><a href="#" class="hover:text-white">AIFCARD</a></li>
+                    <h4 class="text-xl font-semibold mb-4 text-white">市場</h4>
+                    <ul class="space-y-3">
+                        <li><a href="asset_market_spot.html" class="text-gray-400 hover:text-accent transition">現貨市場</a></li>
+                        <li><a href="asset_market_futures.html" class="text-gray-400 hover:text-accent transition">期貨市場</a></li>
+                        <li><a href="project_detail.html" class="text-gray-400 hover:text-accent transition">項目詳情</a></li>
+                        <li><a href="data_dashboard.html" class="text-gray-400 hover:text-accent transition">數據看板</a></li>
                     </ul>
                 </div>
+                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">核心RWA項目</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">創作者收入證券化</a></li>
-                        <li><a href="#" class="hover:text-white">明星數字孿生資產</a></li>
-                        <li><a href="#" class="hover:text-white">AI導演版權基金</a></li>
-                        <li><a href="#" class="hover:text-white">支付網絡節點權</a></li>
-                        <li><a href="#" class="hover:text-white">教育認證IP代幣</a></li>
-                        <li><a href="#" class="hover:text-white">虛擬資產管理服務</a></li>
+                    <h4 class="text-xl font-semibold mb-4 text-white">服務</h4>
+                    <ul class="space-y-3">
+                        <li><a href="assetization_service.html" class="text-gray-400 hover:text-accent transition">資產化服務</a></li>
+                        <li><a href="project_submission.html" class="text-gray-400 hover:text-accent transition">項目提交</a></li>
+                        <li><a href="contract_generation.html" class="text-gray-400 hover:text-accent transition">合約生成</a></li>
+                        <li><a href="protocol_flow.html" class="text-gray-400 hover:text-accent transition">協議完整流程</a></li>
                     </ul>
                 </div>
+                
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">資源與支持</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">完整白皮書集</a></li>
-                        <li><a href="#" class="hover:text-white">技術文檔</a></li>
-                        <li><a href="#" class="hover:text-white">投資指南</a></li>
-                        <li><a href="#" class="hover:text-white">風險提示</a></li>
-                        <li><a href="#" class="hover:text-white">法律合規</a></li>
-                        <li><a href="#" class="hover:text-white">幫助中心</a></li>
+                    <h4 class="text-xl font-semibold mb-4 text-white">資源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="user_academy.html" class="text-gray-400 hover:text-accent transition">用戶學院</a></li>
+                        <li><a href="login_register.html" class="text-gray-400 hover:text-accent transition">登入/註冊</a></li>
+                        <li><a href="sandbox_test.html" class="text-gray-400 hover:text-accent transition">沙盒測試</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition">關於我們</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between">
-                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 香港AI國際電影節協會。保留所有權利。</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#" class="text-gray-500 text-sm hover:text-blue-400">隱私政策</a>
-                    <a href="#" class="text-gray-500 text-sm hover:text-blue-400">服務條款</a>
-                    <a href="#" class="text-gray-500 text-sm hover:text-blue-400">免責聲明</a>
-                    <a href="#" class="text-gray-500 text-sm hover:text-blue-400">風險披露</a>
-                </div>
-            </div>
-            
-            <div class="mt-8 card p-6">
-                <div class="flex flex-col md:flex-row items-start md:items-center">
-                    <div class="mb-4 md:mb-0 md:mr-6">
-                        <h3 class="font-semibold">訂閱我們的通訊</h3>
-                        <p class="text-gray-400 text-sm">獲取最新的項目動態、投資機會和平台功能更新</p>
-                    </div>
-                    <div class="flex-1 w-full md:w-auto">
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input type="email" placeholder="您的電子郵件地址" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            <button class="btn-primary px-4 py-2 rounded-lg">訂閱</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Risk Warning -->
-            <div class="mt-8 bg-red-900 bg-opacity-20 border border-red-500 border-opacity-30 rounded-lg p-6">
-                <h3 class="text-red-400 font-bold mb-2">風險警示</h3>
-                <p class="text-gray-300 text-sm">
-                    投資涉及風險，數字資產價格可能大幅波動。請仔細閱讀相關風險披露文件，並根據自身財務狀況和風險承受能力做出投資決策。過往表現不代表未來收益，投資前請諮詢專業財務顧問。本平台提供的所有信息僅供參考，不構成投資建議。
-                </p>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
             </div>
         </div>
     </footer>
 
-    <!-- Floating Elements -->
-    <div class="fixed bottom-6 left-6 z-10">
-        <button class="bg-gradient rounded-full p-1 shadow-lg hover:opacity-90 transition">
-            <div class="bg-gray-900 rounded-full p-2 flex items-center space-x-2">
-                <div class="text-yellow-400">
-                    <i class="fas fa-coins"></i>
-                </div>
-                <span class="text-white text-sm font-medium">AIF持有者</span>
-                <div class="bg-green-500 w-2 h-2 rounded-full"></div>
-            </div>
-        </button>
-    </div>
-
-    <div class="fixed bottom-6 right-6 z-10">
-        <button class="bg-gradient w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition">
-            <i class="fas fa-comments text-xl"></i>
-        </button>
-    </div>
-
     <script>
-        // Add random data streams
-        function createDataStreams() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const stream = document.createElement('div');
-                    stream.className = 'data-stream';
-                    stream.style.left = Math.random() * 100 + '%';
-                    stream.style.animationDelay = Math.random() * 2 + 's';
-                    document.body.appendChild(stream);
-                    
-                    // Remove after animation
-                    setTimeout(() => {
-                        stream.remove();
-                    }, 4000);
-                }, i * 3000);
-            }
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Start data streams
-            createDataStreams();
-            setInterval(createDataStreams, 15000);
-            
-            // Add scroll animations
-            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        if (entry.target.classList.contains('animate-slide-up')) {
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                        if (entry.target.classList.contains('animate-slide-right')) {
-                            entry.target.style.transform = 'translateX(0)';
-                        }
-                        if (entry.target.classList.contains('animate-fade-in')) {
-                            entry.target.style.transform = 'scale(1)';
-                        }
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                if (el.classList.contains('animate-slide-up')) {
-                    el.style.transform = 'translateY(50px)';
-                }
-                if (el.classList.contains('animate-slide-right')) {
-                    el.style.transform = 'translateX(-50px)';
-                }
-                if (el.classList.contains('animate-fade-in')) {
-                    el.style.transform = 'scale(0.95)';
-                }
-                observer.observe(el);
-            });
-            
-            // Mobile menu functionality
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileMenuClose = document.querySelector('.mobile-menu-close');
-            
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            mobileMenuClose.addEventListener('click', () => {
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
                 mobileMenu.classList.remove('open');
-                document.body.style.overflow = 'auto';
             });
-            
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+        });
+
+        // Add scroll animations
+        const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    if (entry.target.classList.contains('animate-slide-up')) {
+                        entry.target.style.transform = 'translateY(0)';
                     }
-                });
-            });
-            
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.card, .rwa-project-card, .step-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-8px)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
-            
-            // Counter animation for stats
-            const counters = document.querySelectorAll('.stats-card .number');
-            const animateCounters = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const text = counter.textContent;
-                        if (text.includes('億')) {
-                            let current = 0;
-                            const target = 100;
-                            const increment = target / 50;
-                            const timer = setInterval(() => {
-                                current += increment;
-                                if (current >= target) {
-                                    counter.textContent = '100億';
-                                    clearInterval(timer);
-                                } else {
-                                    counter.textContent = Math.floor(current) + '億';
-                                }
-                            }, 40);
-                        }
-                        observer.unobserve(counter);
+                    if (entry.target.classList.contains('animate-slide-right')) {
+                        entry.target.style.transform = 'translateX(0)';
                     }
-                });
-            };
-            
-            const counterObserver = new IntersectionObserver(animateCounters, { threshold: 0.5 });
-            counters.forEach(counter => counterObserver.observe(counter));
+                    if (entry.target.classList.contains('animate-fade-in')) {
+                        entry.target.style.transform = 'scale(1)';
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            if (el.classList.contains('animate-slide-up')) {
+                el.style.transform = 'translateY(50px)';
+            }
+            if (el.classList.contains('animate-slide-right')) {
+                el.style.transform = 'translateX(-50px)';
+            }
+            if (el.classList.contains('animate-fade-in')) {
+                el.style.transform = 'scale(0.95)';
+            }
+            observer.observe(el);
         });
     </script>
 </body>

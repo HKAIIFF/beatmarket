@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>項目提交 - HKAIFM 資產化服務</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --service-color: #00ff9d;
+            --step-color: #3498db;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 157, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 32, 44, 0.95) 100%);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.3);
+            z-index: 1000;
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            padding-top: 3rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--service-color) 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .form-container {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--service-color);
+            font-size: 1.1rem;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
+        }
+        
+        .form-help {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, var(--service-color), var(--primary));
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .step-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(0, 255, 157, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+        }
+        
+        .step-item {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .step-item.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .step-item::after {
+            content: '→';
+            position: absolute;
+            right: -10%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .step-item:last-child::after {
+            content: none;
+        }
+        
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-item.active .step-icon {
+            background: var(--accent);
+            color: #0a0a0a;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+        
+        .required-star {
+            color: #ef4444;
+            margin-left: 0.25rem;
+        }
+
+        /* Mobile Menu Specific Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #1a202c; /* Darker background for mobile menu */
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Language Selector Styles (Removed as per request) */
+        .language-selector {
+            display: none; /* Hide the language selector */
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            .step-tracker {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+            }
+            .step-item {
+                flex-basis: 50%;
+                margin-bottom: 1rem;
+            }
+            .step-item::after {
+                display: none;
+            }
+            .step-item:nth-child(odd)::after {
+                content: '↓';
+                position: absolute;
+                right: 50%;
+                top: 100%;
+                transform: translate(50%, 0);
+                color: rgba(255, 255, 255, 0.3);
+            }
+            .step-item:nth-child(2)::after {
+                content: '→';
+                position: absolute;
+                right: -10%;
+                top: 50%;
+                transform: translateY(-50%);
+                color: rgba(255, 255, 255, 0.3);
+            }
+            .step-item:nth-child(4)::after {
+                content: none;
+            }
+            .grid-cols-1.md\:grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex flex-col items-center hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="text-service-color transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+            </div>
+
+            <!-- Actions & Mobile Button -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector (Removed as requested) -->
+                
+                <a href="login_register.html" class="btn-submit px-6 py-2 rounded-full text-sm hidden md:block">登入 / 註冊</a>
+                
+                <button class="md:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <nav class="mt-10">
+            <a href="index.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">首頁</a>
+            <a href="asset_market_spot.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (現貨)</a>
+            <a href="asset_market_futures.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (期貨)</a>
+            <a href="assetization_service.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產化服務</a>
+            <a href="data_dashboard.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">數據中心</a>
+            <a href="user_academy.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">用戶學院</a>
+            <a href="login_register.html" class="block py-3 text-lg btn-submit text-center rounded-full mt-5">登入 / 註冊</a>
+        </nav>
+    </div>
+
+    <div class="main-content container mx-auto px-4">
+        <div class="page-header">
+            <h1 class="page-title">項目提交</h1>
+            <p class="page-subtitle">
+                請填寫以下表格，提交您的 AI 影視項目，啟動資產化流程。
+            </p>
+        </div>
+
+        <div class="form-container">
+            <div class="step-tracker">
+                <div class="step-item active">
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    項目信息
+                </div>
+                <div class="step-item">
+                    <div class="step-icon"><i class="fas fa-coins"></i></div>
+                    融資細節
+                </div>
+                <div class="step-item">
+                    <div class="step-icon"><i class="fas fa-upload"></i></div>
+                    文件上傳
+                </div>
+                <div class="step-item">
+                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                    確認提交
+                </div>
+            </div>
+
+            <form id="project-submission-form">
+                <!-- Section 1: 項目基本信息 -->
+                <h2 class="section-title"><i class="fas fa-film mr-2"></i> 項目基本信息</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="project-name" class="form-label">項目名稱 <span class="required-star">*</span></label>
+                        <input type="text" id="project-name" class="form-input" placeholder="例如：《數位夢境》" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-type" class="form-label">項目類型 <span class="required-star">*</span></label>
+                        <select id="project-type" class="form-select" required>
+                            <option value="">請選擇</option>
+                            <option value="movie">AI 電影</option>
+                            <option value="series">AI 劇集</option>
+                            <option value="short">AI 短片</option>
+                            <option value="documentary">AI 紀錄片</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="project-description" class="form-label">項目簡介 <span class="required-star">*</span></label>
+                    <textarea id="project-description" class="form-textarea" rows="4" placeholder="請簡要描述您的項目內容、主題和亮點" required></textarea>
+                    <p class="form-help">至少 100 字，將用於市場宣傳。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label for="ai-technology" class="form-label">核心 AI 技術應用 <span class="required-star">*</span></label>
+                        <input type="text" id="ai-technology" class="form-input" placeholder="例如：Prometheus AI 導演系統">
+                        <p class="form-help">請說明項目中 AI 技術的主要應用點。</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="production-status" class="form-label">製作狀態 <span class="required-star">*</span></label>
+                        <select id="production-status" class="form-select" required>
+                            <option value="">請選擇</option>
+                            <option value="concept">概念階段</option>
+                            <option value="pre-production">前期製作</option>
+                            <option value="production">製作中</option>
+                            <option value="post-production">後期製作</option>
+                            <option value="completed">已完成</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Section 2: 融資細節 (簡化，引導至下一頁) -->
+                <h2 class="section-title mt-8"><i class="fas fa-coins mr-2"></i> 融資與資產化意向</h2>
+                
+                <div class="form-group">
+                    <label for="total-budget" class="form-label">項目總預算 (USD) <span class="required-star">*</span></label>
+                    <input type="number" id="total-budget" class="form-input" placeholder="例如：500000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="assetization-type" class="form-label">資產化類型 <span class="required-star">*</span></label>
+                    <select id="assetization-type" class="form-select" required>
+                        <option value="">請選擇</option>
+                        <option value="futures">期貨市場 (IDO/早期融資)</option>
+                        <option value="spot">現貨市場 (已完成項目收益權)</option>
+                    </select>
+                    <p class="form-help">選擇期貨市場將引導您進入 IDO 配置流程。</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="assetization-percentage" class="form-label">資產化比例 (%) <span class="required-star">*</span></label>
+                    <input type="number" id="assetization-percentage" class="form-input" placeholder="例如：10" min="1" max="100" required>
+                    <p class="form-help">您願意將項目多少比例的收益權進行資產化。</p>
+                </div>
+
+                <div class="form-group mt-8">
+                    <button type="button" onclick="window.location.href='contract_generation.html'" class="btn-submit">
+                        下一步：生成智能合約 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer (Copied from index.html for consistency) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div>
+                    <a href="index.html" class="hkaifm-logo mb-4 block">
+                        <div class="logo-font text-2xl">HKAIFM</div>
+                        <div class="logo-sub text-xs">AI FILM MARKET</div>
+                    </a>
+                    <p class="text-gray-400 text-sm mt-4">
+                        全球AI影視資產化領導平台，連接創作者與投資者。
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-telegram-plane text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-medium-m text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">市場</h4>
+                    <ul class="space-y-3">
+                        <li><a href="asset_market_spot.html" class="text-gray-400 hover:text-accent transition">現貨市場</a></li>
+                        <li><a href="asset_market_futures.html" class="text-gray-400 hover:text-accent transition">期貨市場</a></li>
+                        <li><a href="project_detail.html" class="text-gray-400 hover:text-accent transition">項目詳情</a></li>
+                        <li><a href="data_dashboard.html" class="text-gray-400 hover:text-accent transition">數據看板</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">服務</h4>
+                    <ul class="space-y-3">
+                        <li><a href="assetization_service.html" class="text-gray-400 hover:text-accent transition">資產化服務</a></li>
+                        <li><a href="project_submission.html" class="text-gray-400 hover:text-accent transition">項目提交</a></li>
+                        <li><a href="contract_generation.html" class="text-gray-400 hover:text-accent transition">合約生成</a></li>
+                        <li><a href="protocol_flow.html" class="text-gray-400 hover:text-accent transition">協議完整流程</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">資源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="user_academy.html" class="text-gray-400 hover:text-accent transition">用戶學院</a></li>
+                        <li><a href="login_register.html" class="text-gray-400 hover:text-accent transition">登入/註冊</a></li>
+                        <li><a href="sandbox_test.html" class="text-gray-400 hover:text-accent transition">沙盒測試</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition">關於我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    mobileMenu.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

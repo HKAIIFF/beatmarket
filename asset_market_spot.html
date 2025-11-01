@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKAIFM - 資產市場 (現貨)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --gold: #ffd700;
+            --cyan: #00f5ff;
+            --neural-purple: #9333ea;
+            --electric-blue: #0ea5e9;
+            --futures-color: #9333ea;
+            --spot-color: #0ea5e9;
+            --dividend-color: #10b981;
+            --buyout-color: #f59e0b;
+            --rwa-color: #ef4444;
+            --vda-color: #06b6d4;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(142, 68, 173, 0.1) 0%, transparent 30%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 32, 44, 0.95) 100%);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, rgba(26, 32, 44, 0.9), rgba(0, 0, 0, 0.8));
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+        
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filter-section {
+            padding: 2rem 0;
+            background: rgba(26, 32, 44, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .filter-level {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-level:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-title i {
+            margin-right: 0.5rem;
+        }
+        
+        .filter-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        
+        .filter-option {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .filter-option:hover {
+            border-color: var(--accent);
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .filter-option.active {
+            border-color: var(--accent);
+            background: rgba(0, 255, 157, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+        }
+        
+        .filter-option.futures { border-color: var(--futures-color); }
+        .filter-option.futures.active { 
+            border-color: var(--futures-color);
+            background: rgba(147, 51, 234, 0.15);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+        }
+        
+        .filter-option.spot { border-color: var(--spot-color); }
+        .filter-option.spot.active { 
+            border-color: var(--spot-color);
+            background: rgba(14, 165, 233, 0.15);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+        }
+        
+        .filter-option.dividend { border-color: var(--dividend-color); }
+        .filter-option.dividend.active { 
+            border-color: var(--dividend-color);
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .filter-option.buyout { border-color: var(--buyout-color); }
+        .filter-option.buyout.active { 
+            border-color: var(--buyout-color);
+            background: rgba(245, 158, 11, 0.15);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        .filter-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .filter-option.futures .filter-icon { color: var(--futures-color); }
+        .filter-option.spot .filter-icon { color: var(--spot-color); }
+        .filter-option.dividend .filter-icon { color: var(--dividend-color); }
+        .filter-option.buyout .filter-icon { color: var(--buyout-color); }
+        
+        .filter-label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .filter-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .sorting-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .sort-dropdown {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: white;
+            min-width: 150px;
+        }
+        
+        .view-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .view-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .project-card {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .project-card:hover::before {
+            left: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.2);
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .project-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .tag-spot { background: rgba(14, 165, 233, 0.2); color: var(--spot-color); }
+        .tag-dividend { background: rgba(16, 185, 129, 0.2); color: var(--dividend-color); }
+        .tag-rwa { background: rgba(239, 68, 68, 0.2); color: var(--rwa-color); }
+        .tag-vda { background: rgba(6, 182, 212, 0.2); color: var(--vda-color); }
+        
+        .risk-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .risk-s { background: var(--rwa-color); }
+        .risk-a { background: var(--buyout-color); }
+        .risk-b { background: var(--dividend-color); }
+        .risk-c { background: var(--spot-color); }
+        
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: white;
+        }
+        
+        .project-progress {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--spot-color), var(--accent));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--spot-color);
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn-invest {
+            background: linear-gradient(135deg, var(--spot-color), var(--primary));
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-invest:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+        }
+        
+        .btn-detail {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-detail:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Footer styles are assumed to be consistent with index.html */
+    </style>
+</head>
+<body>
+    <!-- Navigation (Simplified for internal pages) -->
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
+            </a>
+            <div class="hidden md:flex space-x-8 desktop-nav">
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition text-blue-400">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="hover:text-blue-400 transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+                <a href="sandbox_test.html" class="hover:text-blue-400 transition">沙盒測試</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="login_register.html" class="btn-primary px-6 py-2 rounded-full text-sm">登入 / 註冊</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="container mx-auto px-4">
+                <h1 class="page-title">現貨市場 (Spot Market)</h1>
+                <p class="page-subtitle">交易已完成 AI 影視資產的收益權，享受穩定分紅。</p>
+                <div class="market-stats">
+                    <div class="stat-item">
+                        <div class="stat-number text-spot-color">125</div>
+                        <div class="stat-label text-gray-400">上線項目總數</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number text-spot-color">$5.2M</div>
+                        <div class="stat-label text-gray-400">總市值 (USD)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number text-spot-color">1.8M</div>
+                        <div class="stat-label text-gray-400">24H 交易量 (AIF)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number text-spot-color">8.5%</div>
+                        <div class="stat-label text-gray-400">平均年化收益率</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-8">
+            <div class="filter-section">
+                <div class="filter-container">
+                    <div class="filter-level">
+                        <h3 class="filter-title"><i class="fas fa-filter"></i> 資產類型篩選</h3>
+                        <div class="filter-options">
+                            <div class="filter-option spot active">
+                                <i class="fas fa-film filter-icon"></i>
+                                <div class="filter-label">收益權 (Dividend)</div>
+                                <div class="filter-desc">基於項目實際收益分紅</div>
+                            </div>
+                            <div class="filter-option buyout">
+                                <i class="fas fa-handshake filter-icon"></i>
+                                <div class="filter-label">回購權 (Buyout)</div>
+                                <div class="filter-desc">特定條件下項目方回購</div>
+                            </div>
+                            <div class="filter-option rwa">
+                                <i class="fas fa-building filter-icon"></i>
+                                <div class="filter-label">實物資產 (RWA)</div>
+                                <div class="filter-desc">與實體資產掛鉤</div>
+                            </div>
+                            <div class="filter-option vda">
+                                <i class="fas fa-code filter-icon"></i>
+                                <div class="filter-label">虛擬數位資產 (VDA)</div>
+                                <div class="filter-desc">純數位版權資產</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sorting-controls">
+                <h2 class="text-2xl font-bold text-white">現貨項目列表</h2>
+                <div class="flex items-center space-x-4">
+                    <label for="sort-by" class="text-gray-400">排序方式:</label>
+                    <select id="sort-by" class="sort-dropdown">
+                        <option>最新上線</option>
+                        <option>最高收益率</option>
+                        <option>最大市值</option>
+                        <option>24H 交易量</option>
+                    </select>
+                    <div class="view-controls">
+                        <button class="view-btn active"><i class="fas fa-th-large"></i></button>
+                        <button class="view-btn"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card" onclick="window.location.href='project_detail.html'">
+                    <div class="project-header">
+                        <div class="project-tags">
+                            <span class="project-tag tag-spot">現貨</span>
+                            <span class="project-tag tag-dividend">收益權</span>
+                        </div>
+                        <div class="risk-badge risk-b">B</div>
+                    </div>
+                    <h3 class="project-title">《數位夢境》- AI科幻電影</h3>
+                    <p class="text-gray-400 text-sm mb-4">已完成製作，現正發行收益權代幣，預計穩定分紅。</p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">12.5%</div>
+                            <div class="metric-label">預計年化收益</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">$0.85</div>
+                            <div class="metric-label">當前價格 (AIF)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">1.2M</div>
+                            <div class="metric-label">總發行量</div>
+                        </div>
+                    </div>
+
+                    <div class="project-actions">
+                        <button class="btn-invest">立即交易</button>
+                        <a href="project_detail.html" class="btn-detail"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card" onclick="window.location.href='project_detail.html'">
+                    <div class="project-header">
+                        <div class="project-tags">
+                            <span class="project-tag tag-spot">現貨</span>
+                            <span class="project-tag tag-buyout">回購權</span>
+                        </div>
+                        <div class="risk-badge risk-a">A</div>
+                    </div>
+                    <h3 class="project-title">《賽博朋克之夜》- AI動畫劇集</h3>
+                    <p class="text-gray-400 text-sm mb-4">已完成第一季，提供回購權證，鎖定未來收益。</p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">9.8%</div>
+                            <div class="metric-label">預計年化收益</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">$1.50</div>
+                            <div class="metric-label">當前價格 (AIF)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">800K</div>
+                            <div class="metric-label">總發行量</div>
+                        </div>
+                    </div>
+
+                    <div class="project-actions">
+                        <button class="btn-invest">立即交易</button>
+                        <a href="project_detail.html" class="btn-detail"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card" onclick="window.location.href='project_detail.html'">
+                    <div class="project-header">
+                        <div class="project-tags">
+                            <span class="project-tag tag-spot">現貨</span>
+                            <span class="project-tag tag-rwa">RWA</span>
+                        </div>
+                        <div class="risk-badge risk-s">S</div>
+                    </div>
+                    <h3 class="project-title">《香港記憶》- 實景AI紀錄片</h3>
+                    <p class="text-gray-400 text-sm mb-4">與實體版權資產掛鉤，風險評級最高。</p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">15.0%</div>
+                            <div class="metric-label">預計年化收益</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">$2.10</div>
+                            <div class="metric-label">當前價格 (AIF)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">500K</div>
+                            <div class="metric-label">總發行量</div>
+                        </div>
+                    </div>
+
+                    <div class="project-actions">
+                        <button class="btn-invest">立即交易</button>
+                        <a href="project_detail.html" class="btn-detail"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Project Card 4 -->
+                <div class="project-card" onclick="window.location.href='project_detail.html'">
+                    <div class="project-header">
+                        <div class="project-tags">
+                            <span class="project-tag tag-spot">現貨</span>
+                            <span class="project-tag tag-vda">VDA</span>
+                        </div>
+                        <div class="risk-badge risk-c">C</div>
+                    </div>
+                    <h3 class="project-title">《元宇宙戀人》- 互動式AI短片</h3>
+                    <p class="text-gray-400 text-sm mb-4">純數位版權資產，輕量級投資選擇。</p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">7.2%</div>
+                            <div class="metric-label">預計年化收益</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">$0.55</div>
+                            <div class="metric-label">當前價格 (AIF)</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value text-spot-color">2.5M</div>
+                            <div class="metric-label">總發行量</div>
+                        </div>
+                    </div>
+
+                    <div class="project-actions">
+                        <button class="btn-invest">立即交易</button>
+                        <a href="project_detail.html" class="btn-detail"><i class="fas fa-info-circle"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Placeholder, assumed to be consistent) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="container mx-auto px-4">
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

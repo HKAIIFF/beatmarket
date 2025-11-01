@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKAIFM 協議完整流程 - HKAIFM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --flow-color: #ffd700; /* Gold for Flow */
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 32, 44, 0.95) 100%);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            padding-top: 3rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--flow-color) 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .flow-container {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .flow-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: -30px;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            z-index: 0;
+        }
+        
+        .step-icon-container {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--flow-color), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #0a0a0a;
+            font-weight: 700;
+            border: 4px solid #0a0a0a;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .step-content {
+            margin-left: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border-left: 5px solid var(--flow-color);
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--flow-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .step-link {
+            color: var(--accent);
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .step-link:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu Specific Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #1a202c; /* Darker background for mobile menu */
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Language Selector Styles (Removed as per request) */
+        .language-selector {
+            display: none; /* Hide the language selector */
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .flow-container {
+                padding: 1.5rem;
+            }
+            .flow-step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .flow-step:not(:last-child)::after {
+                left: 30px;
+                top: 60px;
+                bottom: -10px;
+            }
+            .step-content {
+                margin-left: 0;
+                margin-top: 1rem;
+                padding: 1rem;
+                border-left: none;
+                border-top: 5px solid var(--flow-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex flex-col items-center hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="hover:text-blue-400 transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+            </div>
+
+            <!-- Actions & Mobile Button -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector (Removed as requested) -->
+                
+                <a href="login_register.html" class="btn-primary px-6 py-2 rounded-full text-sm hidden md:block">登入 / 註冊</a>
+                
+                <button class="md:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <nav class="mt-10">
+            <a href="index.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">首頁</a>
+            <a href="asset_market_spot.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (現貨)</a>
+            <a href="asset_market_futures.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (期貨)</a>
+            <a href="assetization_service.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產化服務</a>
+            <a href="data_dashboard.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">數據中心</a>
+            <a href="user_academy.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">用戶學院</a>
+            <a href="login_register.html" class="block py-3 text-lg btn-primary text-center rounded-full mt-5">登入 / 註冊</a>
+        </nav>
+    </div>
+
+    <div class="main-content container mx-auto px-4">
+        <div class="page-header">
+            <h1 class="page-title">HKAIFM 協議完整流程</h1>
+            <p class="page-subtitle">
+                從項目提交到市場交易和收益分配，HKAIFM 協議的六大核心階段。
+            </p>
+        </div>
+
+        <div class="flow-container max-w-4xl mx-auto">
+            
+            <!-- Step 1: 項目提交與審核 -->
+            <div class="flow-step">
+                <div class="step-icon-container">1</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-upload mr-2"></i> 項目提交與審核</h3>
+                    <p class="step-description">
+                        項目方提交 AI 影視項目詳情，平台進行 AI 估值和人工審核，確認資產化資格。
+                    </p>
+                    <a href="project_submission.html" class="step-link mt-2 inline-block">前往項目提交 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Step 2: 智能合約生成 -->
+            <div class="flow-step">
+                <div class="step-icon-container">2</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-file-contract mr-2"></i> 智能合約生成</h3>
+                    <p class="step-description">
+                        根據項目方配置的代幣參數和收益分配邏輯，自動生成並部署資產代幣智能合約。
+                    </p>
+                    <a href="contract_generation.html" class="step-link mt-2 inline-block">前往合約生成 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Step 3: IDO 公募配置 -->
+            <div class="flow-step">
+                <div class="step-icon-container">3</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-coins mr-2"></i> IDO 公募配置</h3>
+                    <p class="step-description">
+                        設定 Initial DEX Offering (IDO) 的價格、發行量、軟硬頂和時間表，啟動公開募集。
+                    </p>
+                    <a href="ido_config.html" class="step-link mt-2 inline-block">前往 IDO 配置 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Step 4: TGE 自動分配 -->
+            <div class="flow-step">
+                <div class="step-icon-container">4</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-hand-holding-usd mr-2"></i> TGE 自動分配</h3>
+                    <p class="step-description">
+                        IDO 結束後，系統自動執行 TGE (Token Generation Event)，按比例釋放代幣給投資者。
+                    </p>
+                    <a href="tge_allocation.html" class="step-link mt-2 inline-block">前往 TGE 監控 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Step 5: 自治托管合約 -->
+            <div class="flow-step">
+                <div class="step-icon-container">5</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-lock mr-2"></i> 自治托管合約</h3>
+                    <p class="step-description">
+                        募集資金進入多簽名托管合約，根據項目里程碑進度，經多方批准後安全釋放資金。
+                    </p>
+                    <a href="autonomous_escrow.html" class="step-link mt-2 inline-block">前往托管監控 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Step 6: 市場上市與交易 -->
+            <div class="flow-step">
+                <div class="step-icon-container">6</div>
+                <div class="step-content">
+                    <h3 class="step-title"><i class="fas fa-chart-line mr-2"></i> 市場上市與交易</h3>
+                    <p class="step-description">
+                        資產代幣在 HKAIFM 現貨或期貨市場上市，投資者可自由交易，實現資產流動性。
+                    </p>
+                    <a href="asset_market_spot.html" class="step-link mt-2 inline-block">前往現貨市場 <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer (Copied from index.html for consistency) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div>
+                    <a href="index.html" class="hkaifm-logo mb-4 block">
+                        <div class="logo-font text-2xl">HKAIFM</div>
+                        <div class="logo-sub text-xs">AI FILM MARKET</div>
+                    </a>
+                    <p class="text-gray-400 text-sm mt-4">
+                        全球AI影視資產化領導平台，連接創作者與投資者。
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-telegram-plane text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-medium-m text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">市場</h4>
+                    <ul class="space-y-3">
+                        <li><a href="asset_market_spot.html" class="text-gray-400 hover:text-accent transition">現貨市場</a></li>
+                        <li><a href="asset_market_futures.html" class="text-gray-400 hover:text-accent transition">期貨市場</a></li>
+                        <li><a href="project_detail.html" class="text-gray-400 hover:text-accent transition">項目詳情</a></li>
+                        <li><a href="data_dashboard.html" class="text-gray-400 hover:text-accent transition">數據看板</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">服務</h4>
+                    <ul class="space-y-3">
+                        <li><a href="assetization_service.html" class="text-gray-400 hover:text-accent transition">資產化服務</a></li>
+                        <li><a href="project_submission.html" class="text-gray-400 hover:text-accent transition">項目提交</a></li>
+                        <li><a href="contract_generation.html" class="text-gray-400 hover:text-accent transition">合約生成</a></li>
+                        <li><a href="protocol_flow.html" class="text-gray-400 hover:text-accent transition">協議完整流程</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">資源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="user_academy.html" class="text-gray-400 hover:text-accent transition">用戶學院</a></li>
+                        <li><a href="login_register.html" class="text-gray-400 hover:text-accent transition">登入/註冊</a></li>
+                        <li><a href="sandbox_test.html" class="text-gray-400 hover:text-accent transition">沙盒測試</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition">關於我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    mobileMenu.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

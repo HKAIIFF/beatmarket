@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>階段2：IDO 公募配置 | HKAIFM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --gold: #ffd700;
+            --cyan: #00f5ff;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(142, 68, 173, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 32, 44, 0.9) 100%);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.3);
+            z-index: 1000;
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            padding-top: 3rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 30%, var(--primary) 70%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 六阶段流程 */
+        .phase-tracker {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(26, 32, 44, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .phase-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0.5;
+        }
+        
+        .phase-item.completed {
+            background: rgba(52, 152, 219, 0.2);
+            border: 2px solid var(--primary);
+            opacity: 1;
+        }
+        
+        .phase-item.active {
+            background: rgba(0, 255, 157, 0.2);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+            opacity: 1;
+        }
+        
+        .phase-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .phase-item.completed .phase-number {
+            color: var(--primary);
+        }
+        
+        .phase-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        
+        /* 表单区域 */
+        .form-section {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(15px);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 255, 157, 0.3);
+        }
+        
+        .section-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--accent);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
+        }
+        
+        .info-box {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .info-title {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .preview-panel {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .preview-label {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .preview-value {
+            font-weight: 600;
+            color: white;
+            text-align: right;
+        }
+        
+        .preview-value.highlight {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        .datetime-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Menu Specific Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #1a202c; /* Darker background for mobile menu */
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Language Selector Styles (Removed as per request) */
+        .language-selector {
+            display: none; /* Hide the language selector */
+        }
+
+        @media (max-width: 768px) {
+            .phase-tracker {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .form-section {
+                padding: 1.5rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex flex-col items-center hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="text-accent transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+            </div>
+
+            <!-- Actions & Mobile Button -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector (Removed as requested) -->
+                
+                <a href="login_register.html" class="btn-primary px-6 py-2 rounded-full text-sm hidden md:block">登入 / 註冊</a>
+                
+                <button class="md:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <nav class="mt-10">
+            <a href="index.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">首頁</a>
+            <a href="asset_market_spot.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (現貨)</a>
+            <a href="asset_market_futures.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (期貨)</a>
+            <a href="assetization_service.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產化服務</a>
+            <a href="data_dashboard.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">數據中心</a>
+            <a href="user_academy.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">用戶學院</a>
+            <a href="login_register.html" class="block py-3 text-lg btn-primary text-center rounded-full mt-5">登入 / 註冊</a>
+        </nav>
+    </div>
+
+    <div class="main-content container mx-auto px-4">
+        <div class="page-header">
+            <h1 class="page-title">階段2：IDO 公募配置</h1>
+            <p class="page-subtitle">
+                為您的資產代幣配置 Initial DEX Offering (IDO) 參數，啟動公開募集。
+            </p>
+        </div>
+
+        <div class="phase-tracker">
+            <div class="phase-item completed">
+                <div class="phase-number">1</div>
+                <div class="phase-name">項目提交</div>
+            </div>
+            <div class="phase-item active">
+                <div class="phase-number">2</div>
+                <div class="phase-name">IDO 配置</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">3</div>
+                <div class="phase-name">TGE 分配</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">4</div>
+                <div class="phase-name">自治托管</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">5</div>
+                <div class="phase-name">市場上市</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">6</div>
+                <div class="phase-name">收益分配</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
+                <form id="ido-config-form">
+                    <!-- 基礎配置 -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <i class="fas fa-coins section-icon"></i>
+                            <h2 class="section-title">IDO 基礎配置</h2>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="ido-token-symbol" class="form-label">資產代幣符號</label>
+                                <input type="text" id="ido-token-symbol" class="form-input" value="DDRS" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-raise-token" class="form-label">募集代幣</label>
+                                <select id="ido-raise-token" class="form-select">
+                                    <option value="AIF">AIF (HKAIFM 平台幣)</option>
+                                    <option value="USDC">USDC</option>
+                                    <option>ETH</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-total-supply" class="form-label">IDO 總發行量 (DDRS)</label>
+                                <input type="number" id="ido-total-supply" class="form-input" value="200000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-price" class="form-label">IDO 價格 (募集代幣/DDRS)</label>
+                                <input type="number" id="ido-price" class="form-input" value="0.15" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-hard-cap" class="form-label">硬頂 (Hard Cap) (募集代幣)</label>
+                                <input type="number" id="ido-hard-cap" class="form-input" value="30000" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-soft-cap" class="form-label">軟頂 (Soft Cap) (募集代幣)</label>
+                                <input type="number" id="ido-soft-cap" class="form-input" value="15000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 時間配置 -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <i class="fas fa-clock section-icon"></i>
+                            <h2 class="section-title">時間配置</h2>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="ido-start-date" class="form-label">IDO 開始日期</label>
+                                <input type="date" id="ido-start-date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-start-time" class="form-label">IDO 開始時間</label>
+                                <input type="time" id="ido-start-time" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-end-date" class="form-label">IDO 結束日期</label>
+                                <input type="date" id="ido-end-date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ido-end-time" class="form-label">IDO 結束時間</label>
+                                <input type="time" id="ido-end-time" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 鎖倉與釋放 -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <i class="fas fa-lock section-icon"></i>
+                            <h2 class="section-title">鎖倉與釋放機制 (Vesting)</h2>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tge-release" class="form-label">TGE 釋放比例 (%)</label>
+                                <input type="number" id="tge-release" class="form-input" value="20" min="0" max="100" required>
+                                <p class="text-gray-400 text-sm mt-1">在 TGE (Token Generation Event) 時立即釋放給投資者的比例。</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="vesting-period" class="form-label">鎖倉期 (月)</label>
+                                <input type="number" id="vesting-period" class="form-input" value="6" min="0" required>
+                                <p class="text-gray-400 text-sm mt-1">剩餘代幣的鎖倉總月數。</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="vesting-frequency" class="form-label">釋放頻率</label>
+                                <select id="vesting-frequency" class="form-select">
+                                    <option value="monthly">每月線性釋放</option>
+                                    <option value="quarterly">每季度釋放</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cliff-period" class="form-label">鎖定期 (Cliff Period) (月)</label>
+                                <input type="number" id="cliff-period" class="form-input" value="1" min="0" required>
+                                <p class="text-gray-400 text-sm mt-1">在開始線性釋放前，代幣完全鎖定的月數。</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="form-section">
+                    <div class="preview-panel">
+                        <h3 class="preview-title"><i class="fas fa-chart-pie mr-2"></i> IDO 預覽與計算</h3>
+                        <div class="preview-item">
+                            <span class="preview-label">項目名稱</span>
+                            <span class="preview-value">《數位夢境》</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">資產代幣</span>
+                            <span class="preview-value highlight">DDRS</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">IDO 總發行量</span>
+                            <span class="preview-value">200,000 DDRS</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">IDO 價格</span>
+                            <span class="preview-value">0.15 AIF / DDRS</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">總募集目標 (硬頂)</span>
+                            <span class="preview-value highlight">30,000 AIF</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">TGE 立即釋放</span>
+                            <span class="preview-value">20%</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">鎖倉期</span>
+                            <span class="preview-value">6 個月</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">每月釋放比例</span>
+                            <span class="preview-value">13.33% (剩餘 80%)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <div class="info-title">
+                            <i class="fas fa-lightbulb mr-2"></i> 提示
+                        </div>
+                        <div class="info-content text-sm text-gray-300">
+                            IDO 硬頂 (Hard Cap) = IDO 總發行量 × IDO 價格。請確保您的配置符合項目融資需求。
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="window.location.href='tge_allocation.html'" class="btn-primary mt-4">
+                        下一步：TGE 自動分配 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button type="button" onclick="window.location.href='contract_generation.html'" class="btn-secondary">
+                        <i class="fas fa-arrow-left mr-2"></i> 返回合約生成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Copied from index.html for consistency) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div>
+                    <a href="index.html" class="hkaifm-logo mb-4 block">
+                        <div class="logo-font text-2xl">HKAIFM</div>
+                        <div class="logo-sub text-xs">AI FILM MARKET</div>
+                    </a>
+                    <p class="text-gray-400 text-sm mt-4">
+                        全球AI影視資產化領導平台，連接創作者與投資者。
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-telegram-plane text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-medium-m text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">市場</h4>
+                    <ul class="space-y-3">
+                        <li><a href="asset_market_spot.html" class="text-gray-400 hover:text-accent transition">現貨市場</a></li>
+                        <li><a href="asset_market_futures.html" class="text-gray-400 hover:text-accent transition">期貨市場</a></li>
+                        <li><a href="project_detail.html" class="text-gray-400 hover:text-accent transition">項目詳情</a></li>
+                        <li><a href="data_dashboard.html" class="text-gray-400 hover:text-accent transition">數據看板</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">服務</h4>
+                    <ul class="space-y-3">
+                        <li><a href="assetization_service.html" class="text-gray-400 hover:text-accent transition">資產化服務</a></li>
+                        <li><a href="project_submission.html" class="text-gray-400 hover:text-accent transition">項目提交</a></li>
+                        <li><a href="contract_generation.html" class="text-gray-400 hover:text-accent transition">合約生成</a></li>
+                        <li><a href="protocol_flow.html" class="text-gray-400 hover:text-accent transition">協議完整流程</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">資源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="user_academy.html" class="text-gray-400 hover:text-accent transition">用戶學院</a></li>
+                        <li><a href="login_register.html" class="text-gray-400 hover:text-accent transition">登入/註冊</a></li>
+                        <li><a href="sandbox_test.html" class="text-gray-400 hover:text-accent transition">沙盒測試</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition">關於我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    mobileMenu.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

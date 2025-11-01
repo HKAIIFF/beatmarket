@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>階段4：自治托管合約 | HKAIFM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+            --gold: #ffd700;
+            --cyan: #00f5ff;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(142, 68, 173, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 32, 44, 0.9) 100%);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.3);
+            z-index: 1000;
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -8px;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+            padding-top: 3rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+        
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 30%, var(--primary) 70%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 六阶段流程 */
+        .phase-tracker {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(26, 32, 44, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .phase-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0.5;
+        }
+        
+        .phase-item.completed {
+            background: rgba(52, 152, 219, 0.2);
+            border: 2px solid var(--primary);
+            opacity: 1;
+        }
+        
+        .phase-item.active {
+            background: rgba(0, 255, 157, 0.2);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+            opacity: 1;
+        }
+        
+        .phase-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .phase-item.completed .phase-number {
+            color: var(--primary);
+        }
+        
+        .phase-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        /* 预算仪表盘 */
+        .budget-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .budget-card {
+            background: rgba(26, 32, 44, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+        }
+        
+        .budget-card.primary { border-color: var(--primary); background: rgba(52, 152, 219, 0.1); }
+        .budget-card.success { border-color: var(--success); background: rgba(46, 204, 113, 0.1); }
+        .budget-card.warning { border-color: var(--warning); background: rgba(243, 156, 18, 0.1); }
+        .budget-card.danger { border-color: var(--danger); background: rgba(231, 76, 60, 0.1); }
+        
+        .budget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .budget-card.primary .budget-icon { background: rgba(52, 152, 219, 0.2); color: var(--primary); }
+        .budget-card.success .budget-icon { background: rgba(46, 204, 113, 0.2); color: var(--success); }
+        .budget-card.warning .budget-icon { background: rgba(243, 156, 18, 0.2); color: var(--warning); }
+        .budget-card.danger .budget-icon { background: rgba(231, 76, 60, 0.2); color: var(--danger); }
+        
+        .budget-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+        }
+        
+        /* 主要内容布局 */
+        .main-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: rgba(26, 32, 44, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 255, 157, 0.3);
+        }
+        
+        .card-title-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--accent);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* 进度条 */
+        .progress-section {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            border-radius: 20px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: black;
+        }
+        
+        .milestone-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .milestone-item:last-child {
+            border-bottom: none;
+        }
+        
+        .milestone-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .milestone-status.completed { background: var(--success); color: white; }
+        .milestone-status.pending { background: var(--warning); color: white; }
+        .milestone-status.locked { background: var(--danger); color: white; }
+        
+        .milestone-info {
+            flex-grow: 1;
+        }
+        
+        .milestone-title {
+            font-weight: 600;
+            color: white;
+        }
+        
+        .milestone-detail {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .milestone-amount {
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Menu Specific Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #1a202c; /* Darker background for mobile menu */
+            z-index: 50;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Language Selector Styles (Removed as per request) */
+        .language-selector {
+            display: none; /* Hide the language selector */
+        }
+
+        @media (max-width: 768px) {
+            .phase-tracker {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .budget-dashboard {
+                grid-template-columns: 1fr;
+            }
+            .main-content-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex flex-col items-center hkaifm-logo">
+                <div class="logo-font">HKAIFM</div>
+                <div class="logo-sub">AI FILM MARKET</div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="asset_market_spot.html" class="hover:text-blue-400 transition">資產市場 (現貨)</a>
+                <a href="asset_market_futures.html" class="hover:text-blue-400 transition">資產市場 (期貨)</a>
+                <a href="assetization_service.html" class="hover:text-blue-400 transition">資產化服務</a>
+                <a href="data_dashboard.html" class="hover:text-blue-400 transition">數據中心</a>
+                <a href="user_academy.html" class="hover:text-blue-400 transition">用戶學院</a>
+            </div>
+
+            <!-- Actions & Mobile Button -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector (Removed as requested) -->
+                
+                <a href="login_register.html" class="btn-primary px-6 py-2 rounded-full text-sm hidden md:block">登入 / 註冊</a>
+                
+                <button class="md:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <nav class="mt-10">
+            <a href="index.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">首頁</a>
+            <a href="asset_market_spot.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (現貨)</a>
+            <a href="asset_market_futures.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產市場 (期貨)</a>
+            <a href="assetization_service.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">資產化服務</a>
+            <a href="data_dashboard.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">數據中心</a>
+            <a href="user_academy.html" class="block py-3 text-lg hover:text-blue-400 transition border-b border-gray-800">用戶學院</a>
+            <a href="login_register.html" class="block py-3 text-lg btn-primary text-center rounded-full mt-5">登入 / 註冊</a>
+        </nav>
+    </div>
+
+    <div class="main-content container mx-auto px-4">
+        <div class="page-header">
+            <h1 class="page-title">階段4：自治托管合約</h1>
+            <p class="page-subtitle">
+                監控項目資金的自治托管狀態，確保資金按預設里程碑安全釋放。
+            </p>
+        </div>
+
+        <div class="phase-tracker">
+            <div class="phase-item completed">
+                <div class="phase-number">1</div>
+                <div class="phase-name">項目提交</div>
+            </div>
+            <div class="phase-item completed">
+                <div class="phase-number">2</div>
+                <div class="phase-name">IDO 配置</div>
+            </div>
+            <div class="phase-item completed">
+                <div class="phase-number">3</div>
+                <div class="phase-name">TGE 分配</div>
+            </div>
+            <div class="phase-item active">
+                <div class="phase-number">4</div>
+                <div class="phase-name">自治托管</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">5</div>
+                <div class="phase-name">市場上市</div>
+            </div>
+            <div class="phase-item">
+                <div class="phase-number">6</div>
+                <div class="phase-name">收益分配</div>
+            </div>
+        </div>
+
+        <div class="budget-dashboard">
+            <div class="budget-card primary">
+                <div class="budget-icon"><i class="fas fa-wallet"></i></div>
+                <div class="budget-label text-gray-400">托管合約總額</div>
+                <div class="budget-value">30,000 AIF</div>
+                <div class="budget-subtext text-gray-500">IDO 募集資金</div>
+            </div>
+            <div class="budget-card success">
+                <div class="budget-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="budget-label text-gray-400">已釋放資金</div>
+                <div class="budget-value">6,000 AIF</div>
+                <div class="budget-subtext text-gray-500">完成里程碑 1</div>
+            </div>
+            <div class="budget-card warning">
+                <div class="budget-icon"><i class="fas fa-hourglass-half"></i></div>
+                <div class="budget-label text-gray-400">待釋放資金</div>
+                <div class="budget-value">24,000 AIF</div>
+                <div class="budget-subtext text-gray-500">剩餘 4 個里程碑</div>
+            </div>
+            <div class="budget-card danger">
+                <div class="budget-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="budget-label text-gray-400">資金鎖定比例</div>
+                <div class="budget-value">80%</div>
+                <div class="budget-subtext text-gray-500">保障投資者權益</div>
+            </div>
+        </div>
+
+        <div class="main-content-grid">
+            <!-- 左側：里程碑進度 -->
+            <div class="left-column">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <i class="fas fa-map-marker-alt card-icon"></i>
+                            <h2 class="card-title">項目里程碑進度</h2>
+                        </div>
+                        <span class="text-sm font-semibold text-warning">總進度: 20%</span>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-label-row">
+                            <span class="text-white">資金釋放進度</span>
+                            <span class="text-accent">6,000 AIF / 30,000 AIF</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 20%;">20%</div>
+                        </div>
+                    </div>
+
+                    <ul class="milestone-list mt-6">
+                        <li class="milestone-item">
+                            <div class="milestone-status completed"><i class="fas fa-check"></i></div>
+                            <div class="milestone-info">
+                                <div class="milestone-title">里程碑 1: 概念設計與劇本定稿</div>
+                                <div class="milestone-detail">已完成 AI 劇本生成和主要視覺概念設計。</div>
+                            </div>
+                            <div class="milestone-amount">6,000 AIF (20%)</div>
+                        </li>
+                        <li class="milestone-item">
+                            <div class="milestone-status pending"><i class="fas fa-clock"></i></div>
+                            <div class="milestone-info">
+                                <div class="milestone-title">里程碑 2: AI 角色建模與場景渲染</div>
+                                <div class="milestone-detail">需完成 5 個主要角色的 AI 建模和 3 個核心場景的渲染。</div>
+                            </div>
+                            <div class="milestone-amount">7,500 AIF (25%)</div>
+                        </li>
+                        <li class="milestone-item">
+                            <div class="milestone-status locked"><i class="fas fa-lock"></i></div>
+                            <div class="milestone-info">
+                                <div class="milestone-title">里程碑 3: 初剪與配樂完成</div>
+                                <div class="milestone-detail">完成電影初剪版本，並簽訂配樂合約。</div>
+                            </div>
+                            <div class="milestone-amount">7,500 AIF (25%)</div>
+                        </li>
+                        <li class="milestone-item">
+                            <div class="milestone-status locked"><i class="fas fa-lock"></i></div>
+                            <div class="milestone-info">
+                                <div class="milestone-title">里程碑 4: 最終交付與發行準備</div>
+                                <div class="milestone-detail">電影最終版本交付，並確定發行渠道。</div>
+                            </div>
+                            <div class="milestone-amount">9,000 AIF (30%)</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 右側：合約操作與信息 -->
+            <div class="right-column">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <i class="fas fa-file-contract card-icon"></i>
+                            <h2 class="card-title">合約操作</h2>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-gray-400">
+                            資金釋放需要多簽名合約 (Multi-sig) 批准。
+                        </p>
+                        <div class="p-3 bg-gray-900 rounded-lg">
+                            <p class="text-sm text-gray-500">托管合約地址</p>
+                            <p class="text-accent break-all text-sm">0x...EscrowContractAddress</p>
+                        </div>
+                        <div class="p-3 bg-gray-900 rounded-lg">
+                            <p class="text-sm text-gray-500">所需批准數 (N/M)</p>
+                            <p class="text-white font-bold">3 / 5</p>
+                        </div>
+                        <div class="p-3 bg-gray-900 rounded-lg">
+                            <p class="text-sm text-gray-500">當前批准數</p>
+                            <p class="text-success font-bold">4 / 5</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary mt-6">
+                        <i class="fas fa-signature mr-2"></i> 批准下一里程碑釋放
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="fas fa-eye mr-2"></i> 鏈上查看合約
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <i class="fas fa-users card-icon"></i>
+                            <h2 class="card-title">多簽名成員</h2>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex justify-between items-center">
+                            <span>項目方 (Project Team)</span>
+                            <span class="text-success"><i class="fas fa-check-circle mr-1"></i> 已批准</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span>HKAIFM 審計 (Audit)</span>
+                            <span class="text-success"><i class="fas fa-check-circle mr-1"></i> 已批准</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span>社區代表 A (Community)</span>
+                            <span class="text-success"><i class="fas fa-check-circle mr-1"></i> 已批准</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span>社區代表 B (Community)</span>
+                            <span class="text-warning"><i class="fas fa-clock mr-1"></i> 待批准</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span>法律顧問 (Legal)</span>
+                            <span class="text-success"><i class="fas fa-check-circle mr-1"></i> 已批准</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-8">
+            <button type="button" onclick="window.location.href='asset_market_spot.html'" class="btn-primary px-8 py-3 rounded-full text-lg inline-block">
+                下一步：市場上市 <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer (Copied from index.html for consistency) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div>
+                    <a href="index.html" class="hkaifm-logo mb-4 block">
+                        <div class="logo-font text-2xl">HKAIFM</div>
+                        <div class="logo-sub text-xs">AI FILM MARKET</div>
+                    </a>
+                    <p class="text-gray-400 text-sm mt-4">
+                        全球AI影視資產化領導平台，連接創作者與投資者。
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-telegram-plane text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition"><i class="fab fa-medium-m text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">市場</h4>
+                    <ul class="space-y-3">
+                        <li><a href="asset_market_spot.html" class="text-gray-400 hover:text-accent transition">現貨市場</a></li>
+                        <li><a href="asset_market_futures.html" class="text-gray-400 hover:text-accent transition">期貨市場</a></li>
+                        <li><a href="project_detail.html" class="text-gray-400 hover:text-accent transition">項目詳情</a></li>
+                        <li><a href="data_dashboard.html" class="text-gray-400 hover:text-accent transition">數據看板</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">服務</h4>
+                    <ul class="space-y-3">
+                        <li><a href="assetization_service.html" class="text-gray-400 hover:text-accent transition">資產化服務</a></li>
+                        <li><a href="project_submission.html" class="text-gray-400 hover:text-accent transition">項目提交</a></li>
+                        <li><a href="contract_generation.html" class="text-gray-400 hover:text-accent transition">合約生成</a></li>
+                        <li><a href="protocol_flow.html" class="text-gray-400 hover:text-accent transition">協議完整流程</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 text-white">資源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="user_academy.html" class="text-gray-400 hover:text-accent transition">用戶學院</a></li>
+                        <li><a href="login_register.html" class="text-gray-400 hover:text-accent transition">登入/註冊</a></li>
+                        <li><a href="sandbox_test.html" class="text-gray-400 hover:text-accent transition">沙盒測試</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-accent transition">關於我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2025 HKAIFM. All rights reserved. | Powered by AI & Blockchain Technology.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    mobileMenu.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
