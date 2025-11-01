@@ -396,6 +396,32 @@
             .mobile-menu {
                 display: block;
             }
+            
+            /* 修复移动端漂浮框遮挡文字问题 */
+            .ai-element {
+                display: none !important;
+            }
+            
+            .hero-content {
+                padding-top: 40px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.1rem !important;
+            }
+            
+            .market-card {
+                margin-bottom: 20px;
+            }
+            
+            .stats-card .number {
+                font-size: 2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -414,11 +440,19 @@
             .mobile-menu {
                 width: 100%;
             }
+            
+            .hero h1 {
+                font-size: 2rem !important;
+            }
+            
+            .hero p {
+                font-size: 1rem !important;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- AI Elements -->
+    <!-- AI Elements (移动端隐藏) -->
     <div class="ai-element" style="top: 120px; left: 10%;">
         PROJECT_COUNT: 2,847 <br>
         STATUS: ACTIVE <br>
@@ -857,207 +891,6 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HKAIIFF Film Festival Integration -->
-    <section class="py-16" id="festival">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">
-                        <span class="gradient-text">HKAIIFF</span> 電影節深度整合
-                    </h2>
-                    <p class="text-xl text-gray-300 mb-8">
-                        香港 AI 國際影展（HKAIIFF）與 HKAIFM 平台深度整合，為獲獎作品提供快速資產化通道，建立藝術價值與商業價值的完美橋樑。
-                    </p>
-                    
-                    <div class="space-y-6 mb-8">
-                        <div class="flex items-start space-x-4">
-                            <div class="text-2xl text-yellow-400 mt-1">
-                                <i class="fas fa-award"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">獲獎作品優先通道</h3>
-                                <p class="text-gray-400">電影節獲獎作品享有快速審核和資產化綠色通道</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="text-2xl text-blue-400 mt-1">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">權威認證標識</h3>
-                                <p class="text-gray-400">HKAIIFF 官方認證，提升項目可信度和投資價值</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="text-2xl text-green-400 mt-1">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">專業評估加速</h3>
-                                <p class="text-gray-400">專業評審團隊提供快速評估，縮短上線週期</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="#festival-trading" class="btn-primary px-8 py-3 rounded-lg font-medium inline-block">
-                        進入電影節專區
-                    </a>
-                </div>
-                
-                <div class="relative">
-                    <div class="card p-8">
-                        <h3 class="text-xl font-bold mb-6 text-center">最新電影節動態</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-yellow-500 to-orange-500 bg-opacity-20 rounded-lg">
-                                <div class="text-2xl text-yellow-400">
-                                    <i class="fas fa-trophy"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold">《未來視界》榮獲最佳AI影片</h4>
-                                    <p class="text-sm text-gray-400">已開啟快速資產化通道</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-20 rounded-lg">
-                                <div class="text-2xl text-blue-400">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold">156 部作品正在資產化</h4>
-                                    <p class="text-sm text-gray-400">總價值超過 $12.3M</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-green-500 to-blue-500 bg-opacity-20 rounded-lg">
-                                <div class="text-2xl text-green-400">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold">下屆電影節報名開啟</h4>
-                                    <p class="text-sm text-gray-400">2024年3月15日截止</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Floating Award Badge -->
-                    <div class="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black p-3 rounded-xl transform rotate-12 shadow-lg">
-                        <div class="text-sm font-bold">官方認證</div>
-                        <div class="text-xs">HKAIIFF</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ecosystem Navigation -->
-    <section class="py-16 bg-gradient-to-br from-gray-900 to-black" id="ecosystem">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">HKAIFM 生態矩陣</h2>
-            <p class="text-xl text-gray-300 text-center mb-12 max-w-3xl mx-auto">
-                「6+1+1」完整生態架構，為AI影視產業提供從教育、創作、資產化到交易的全鏈條服務
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- HKAIFA Academy -->
-                <div class="card p-6 group hover:border-blue-400">
-                    <div class="text-4xl mb-4 text-blue-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">HKAIFA 學院</h3>
-                    <p class="text-gray-400 mb-4">AI影視專業教育體系，培養行業頂尖人才</p>
-                    <a href="user_academy.html" class="text-blue-400 hover:text-blue-300 text-sm font-medium">
-                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-                
-                <!-- HKAIIFF Festival -->
-                <div class="card p-6 group hover:border-yellow-400">
-                    <div class="text-4xl mb-4 text-yellow-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">HKAIIFF 電影節</h3>
-                    <p class="text-gray-400 mb-4">全球AI影視作品展示與交流平台</p>
-                    <a href="#festival" class="text-yellow-400 hover:text-yellow-300 text-sm font-medium">
-                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-                
-                <!-- 404.world -->
-                <div class="card p-6 group hover:border-purple-400">
-                    <div class="text-4xl mb-4 text-purple-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-vr-cardboard"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">404.world</h3>
-                    <p class="text-gray-400 mb-4">元宇宙虛擬展示與數位人互動平台</p>
-                    <a href="#metaverse" class="text-purple-400 hover:text-purple-300 text-sm font-medium">
-                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-                
-                <!-- AIF.Exchange -->
-                <div class="card p-6 group hover:border-green-400">
-                    <div class="text-4xl mb-4 text-green-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">AIF.Exchange</h3>
-                    <p class="text-gray-400 mb-4">專業AI影視資產二級交易平台</p>
-                    <a href="#exchange" class="text-green-400 hover:text-green-300 text-sm font-medium">
-                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-                
-                <!-- AIF.Center -->
-                <div class="card p-6 group hover:border-red-400">
-                    <div class="text-4xl mb-4 text-red-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">AIF.Center</h3>
-                    <p class="text-gray-400 mb-4">專業諮詢與技術服務中心</p>
-                    <a href="#center" class="text-red-400 hover:text-red-300 text-sm font-medium">
-                        了解更多 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-                
-                <!-- HKAIFM Core -->
-                <div class="card p-6 group hover:border-cyan-400 bg-gradient-to-br from-cyan-500 to-blue-500 bg-opacity-20">
-                    <div class="text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-gem"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">HKAIFM 核心</h3>
-                    <p class="text-gray-400 mb-4">AI影視資產化與投資交易核心平台</p>
-                    <div class="text-cyan-400 text-sm font-medium">
-                        您目前所在平台 <i class="fas fa-check ml-1"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter CTA -->
-    <section class="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">加入 AI 影視資產化革命</h2>
-                <p class="text-xl text-gray-200 mb-8">
-                    訂閱我們的電子報，獲取最新項目動態、獨家投資機會和行業深度分析
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                    <input type="email" placeholder="輸入您的電子郵件" class="input-field rounded-full px-6 py-3 w-full">
-                    <button class="btn-primary px-8 py-3 rounded-full font-medium whitespace-nowrap">
-                        立即訂閱
-                    </button>
-                </div>
-                <p class="text-sm text-gray-400 mt-4">
-                    訂閱即表示您同意我們的 <a href="#" class="text-blue-400">隱私政策</a> 和 <a href="#" class="text-blue-400">服務條款</a>
-                </p>
             </div>
         </div>
     </section>
